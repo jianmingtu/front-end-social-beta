@@ -21,7 +21,7 @@ export default function App() {
         <Route path="/login">
           <LoginPage />
         </Route>
-        <Route path="/profile">
+        <Route path="/user/:userId?"> {/* Default link should redirect to current user's profile, maybe redirect to login if no current user */}
           <UserProfilePage />
         </Route>
         <Route path="/post/:postId">
