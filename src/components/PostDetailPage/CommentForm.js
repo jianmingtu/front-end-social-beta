@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
-export default function Post() {
+export default function CommentForm() {
   return (
-    "Post Page"
+    "Submit Comment"
   )
 }

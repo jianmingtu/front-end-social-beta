@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
-export default function Login() {
+export default function UserProfile() {
   return (
-    "Login/SignUp"
+    "Profile"
   )
 }

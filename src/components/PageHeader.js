@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
-export default function PostDetail() {
+export default function PageHeader() {
   return (
-    "Post Detail Page"
+    "Header"
   )
 }

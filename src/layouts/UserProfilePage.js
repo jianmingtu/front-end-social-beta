@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 
-import Post from '../components/PostPage/Post'
+import UserProfile from '../components/UserProfile'
 
 export default function PostPage() {
   return (
-    <Post />
+    <UserProfile />
   )
 }

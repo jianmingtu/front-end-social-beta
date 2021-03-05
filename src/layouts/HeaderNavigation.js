@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 
-import Post from '../components/PostPage/Post'
+import PageHeader from '../components/PageHeader'
 
 export default function PostPage() {
   return (
-    <Post />
+    <PageHeader />
   )
 }
