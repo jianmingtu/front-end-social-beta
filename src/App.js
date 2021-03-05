@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect
+} from "react-router-dom"
 
-function App() {
+import HeaderNavigation from './layouts/HeaderNavigation'
+import LoginPage from './layouts/LoginPage'
+import UserProfilePage from './layouts/UserProfilePage'
+import PostPage from './layouts/PostPage'
+import PostDetailPage from './layouts/PostDetailPage'
+
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Router>
+      <HeaderNavigation />
+      <main style={{marginTop: 100}}></main>
+      <Switch>
+        <Route path="/login">
+          <LoginPage />
+        </Route>
+        <Route path="/user/:userId?"> {/* Default link should redirect to current user's profile, maybe redirect to login if no current user */}
+          <UserProfilePage />
+        </Route>
+        <Route path="/post/:postId">
+          <PostDetailPage />
+        </Route>
+        <Route path="/">
+          <PostPage />
+        </Route>
+      </Switch>
+    </Router>
+  )
 }
-
-export default App;

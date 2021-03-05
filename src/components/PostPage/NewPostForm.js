@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
-export default function Login() {
+export default function NewPostForm() {
   return (
-    "Login/SignUp"
+    "Submit Post"
   )
 }
