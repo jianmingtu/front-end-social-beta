@@ -82,7 +82,14 @@ Please refer to the [backend repository](https://github.com/BCIT-SSD-2020-21/ser
 
 ### Prototype
 
-Embed the prototype image here
+![](https://i.imgur.com/V1gZ6rx.png)
+![](https://i.imgur.com/MKTgnuG.png)
+![](https://i.imgur.com/b9ZzF7u.png)
+![](https://i.imgur.com/QcluPGo.png)
+![](https://i.imgur.com/z4WwlIO.png)
+![](https://i.imgur.com/B6CvVf9.png)
+![](https://i.imgur.com/YwWkO0M.png)
+![](https://i.imgur.com/dtbVXMC.png)
 
 ### ERD
 
