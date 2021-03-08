@@ -15,7 +15,9 @@ export default function Post() {
           </span>
           <button>Options</button>
         </span>
-        <p>Post Content here</p>
+        <span className={styles.postContent}>
+          <p>Post Content here</p>
+        </span>
         <p>Image</p>
       </div>
     </div>

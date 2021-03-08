@@ -36,3 +36,8 @@
   width: 5rem;
   height: 5rem;
 }
+
+.postContent {
+  margin-top: 2rem;
+  width: 80%;
+}
