@@ -1,0 +1,13 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem;
+}
+
+.rightContainer {
+  display: flex;
+}
+
+.rightContainer * {
+  margin: 1rem;
+}
