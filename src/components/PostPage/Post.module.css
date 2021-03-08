@@ -1,3 +1,38 @@
 .container {
   padding: 5rem;
 }
+
+.postContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #FFFFFF;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin: 1rem 0;
+  box-shadow: 0 0.25rem 0.5rem 0 rgba(0,0,0,0.2);
+}
+
+.postUser {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.user {
+  display: flex;
+  justify-content: flex-start;
+  align-content: center;
+}
+
+.user * {
+  padding: 0 1rem;
+}
+
+.avatar {
+  border-radius: 50%;
+  width: 5rem;
+  height: 5rem;
+}
