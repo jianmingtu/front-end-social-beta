@@ -8,6 +8,6 @@
   display: flex;
 }
 
-.rightContainer * {
+.rightContainer > * {
   margin: 1rem;
 }

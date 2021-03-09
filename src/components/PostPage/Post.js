@@ -19,6 +19,16 @@ export default function Post() {
           <p>Post Content here</p>
         </span>
         <p>Image</p>
+        <span className={styles.likeComment}>
+          <span className={styles.buttonCounter}>
+            <button>Icon</button>
+            <p>0</p>
+          </span>
+          <span className={styles.buttonCounter}>
+            <button>Icon</button>
+            <p>1</p>
+          </span>
+        </span>
       </div>
     </div>
   )

@@ -1,5 +1,24 @@
 .container {
-  padding: 5rem;
+  display: flex;
+}
+
+.imageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+}
+
+.image {
+  max-width: 90%;
+}
+
+.detailContainer {
+  display: flex;
+  flex-direction: column;
+  background-color: #FFFFFF;
+  width: 50%;
+  padding: 1rem;
 }
 
 .postContainer {
@@ -7,11 +26,8 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  background-color: #FFFFFF;
-  border-radius: 0.5rem;
   padding: 1rem;
   margin: 1rem 0;
-  box-shadow: 0 0.25rem 0.5rem 0 rgba(0,0,0,0.2);
 }
 
 .postUser {
@@ -33,13 +49,17 @@
 
 .avatar {
   border-radius: 50%;
-  width: 5rem;
-  height: 5rem;
+  width: 3rem;
+  height: 3rem;
 }
 
 .postContent {
   margin-top: 2rem;
   width: 80%;
+}
+
+.commentContainer > * {
+  margin: 1rem 0;
 }
 
 .likeComment {
