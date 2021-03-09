@@ -16,7 +16,8 @@
 .inputForm {
   display: flex;
   flex-direction: column;
-  width: 90%;
+  margin-left: 5%;
+  width: 100%;
 }
 
 .formText {

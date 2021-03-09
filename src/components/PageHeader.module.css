@@ -6,6 +6,7 @@
 
 .rightContainer {
   display: flex;
+  align-items: center;
 }
 
 .rightContainer > * {

@@ -11,6 +11,7 @@
 
 .image {
   max-width: 90%;
+  min-width: 50%;
 }
 
 .detailContainer {
