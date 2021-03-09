@@ -1,0 +1,79 @@
+.container {
+  display: flex;
+}
+
+.imageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+}
+
+.image {
+  max-width: 90%;
+  min-width: 50%;
+}
+
+.detailContainer {
+  display: flex;
+  flex-direction: column;
+  background-color: #FFFFFF;
+  width: 50%;
+  padding: 1rem;
+}
+
+.postContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
+.postUser {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.user {
+  display: flex;
+  justify-content: flex-start;
+  align-content: center;
+}
+
+.user > * {
+  padding: 0 1rem;
+}
+
+.avatar {
+  border-radius: 50%;
+  width: 3rem;
+  height: 3rem;
+}
+
+.postContent {
+  margin-top: 2rem;
+  width: 80%;
+}
+
+.commentContainer > * {
+  margin: 1rem 0;
+}
+
+.likeComment {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+}
+
+.buttonCounter {
+  display: flex;
+}
+
+.buttonCounter > * {
+  margin: 0 1rem;
+}

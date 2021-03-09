@@ -1,0 +1,14 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem;
+}
+
+.rightContainer {
+  display: flex;
+  align-items: center;
+}
+
+.rightContainer > * {
+  margin: 1rem;
+}

@@ -1,0 +1,16 @@
+.commentForm {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.avatar {
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+}
+
+.commentText {
+  border-radius: 0.5rem;
+  width: 90%;
+}
