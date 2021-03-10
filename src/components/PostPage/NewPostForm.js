@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import styles from './NewPostForm.module.css'
 
-export default function NewPostForm({createPost}) {
+export default function NewPostForm({submitPost}) {
   const [showFileInput, setShowFileInput] = useState(false)
 
   const handleImage = (e) => {
@@ -11,7 +11,7 @@ export default function NewPostForm({createPost}) {
 
   const handleNewPost = (e) => {
     e.preventDefault()
-    createPost({content: e.target.content.value, imageFile: e.target.imageFile})
+    submitPost({content: e.target.content.value, imageFile: e.target.imageFile})
   }
 
   return (
