@@ -3,10 +3,10 @@ import React, { useEffect, useState } from 'react'
 import NewPostForm from './NewPostForm'
 import styles from './Post.module.css'
 
-export default function Post() {
+export default function Post({createPost}) {
   return (
     <div className={styles.container}>
-      <NewPostForm />
+      <NewPostForm createPost={createPost} />
       <div className={styles.postContainer}>
         <span className={styles.postUser}>
           <span className={styles.user}>
