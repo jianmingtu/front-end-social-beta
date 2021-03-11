@@ -106,9 +106,17 @@ export function userToken() {
   })
 }
 
+
+
 // the decode a user's Jwt Token and return
 export function currentDecodeUser() {
-  return userToken().then(JwtToken => { return (jwtDecode(JwtToken)) }).catch( e => {});
+  return  userToken().then(JwtToken => { 
+     console.log(jwtDecode(JwtToken))
+    return (jwtDecode(JwtToken)) 
+  }).catch( e => {
+    console.log(e)
+    return ""
+  });
 }
 
 // remove token from local storage

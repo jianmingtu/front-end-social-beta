@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 import Post from '../components/PostPage/Post'
-import { createPost } from '../network'
+import { createPost } from '../network/network'
 
 const submitPost = async (data) => {
   await createPost({data})

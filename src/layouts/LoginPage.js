@@ -33,12 +33,14 @@ export default function PostPage({setUserFunc}) {
         // routing to the HOME page after successfully signup or login
         history.push("/")
         const currentUser = await currentDecodeUser();
+        console.log(currentUser);
         setUserFunc(currentUser);
         setError(null)      
       } catch( error) {
         // reset user and user token 
         setUserFunc(null);
         setError(error);
+        console.log(error);
       }
   }
 

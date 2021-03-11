@@ -13,13 +13,11 @@ export default function PageHeader({user, signOut}) {
       <p>Logo Here</p>
       {
         !!user ?
-        {/* 1. show Profile and Sign Out */}
           <span className={styles.rightContainer}>
             <p>Profile</p>
             <FadeMenu signOut = {signOut} />
           </span>        
         :
-        {/* 2. or, show Login button */} */}
           <span className={styles.rightContainer}>
             <button onClick = { () => history.push("/login")}>Login</button>
           </span>

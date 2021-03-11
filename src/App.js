@@ -15,8 +15,12 @@ import styles from './App.module.css'
 import {currentDecodeUser, signOut} from './network/userAuth'
 
 export default function App() {
-  const _currentDecodeUser = await currentDecodeUser();
-  const [user, setUser] = useState(_currentDecodeUser)
+  const [user, setUser] = useState({})
+
+  useEffect( async () => {
+     const decodedToken = await currentDecodeUser();
+    setUser(decodedToken);
+  },[])
 
   // update the current user state.  if update is falsely value,  call signOut to remove user tokens from local storage.  
   const setUserFunc = userUpdate => {
