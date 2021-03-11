@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 
 import styles from './PageHeader.module.css'
+import FadeMenu from './FadeMenu'
 
-export default function PageHeader() {
+export default function PageHeader({signOut}) {
   return (
     <div className={styles.container}>
       <p>Logo Here</p>
@@ -14,7 +15,7 @@ export default function PageHeader() {
         :
           <span className={styles.rightContainer}>
             <p>Profile</p>
-            <button>Dropdown</button>
+            <FadeMenu signOut = {signOut} />
           </span>
       }
     </div>

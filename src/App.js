@@ -12,19 +12,19 @@ import UserProfilePage from './layouts/UserProfilePage'
 import PostPage from './layouts/PostPage'
 import PostDetailPage from './layouts/PostDetailPage'
 import styles from './App.module.css'
-import {getDecodedToken, removeTokenFromStorage} from './userToken'
+import {user as getUser, signOut} from './network/userAuth'
 
 export default function App() {
-  const [user, setUser] = useState(getDecodedToken())
+  const [user, setUser] = useState(getUser())
 
   const setUserFunc = user => {
     setUser(user)
-    if(!user) removeTokenFromStorage();
+    if(!user) signOut();
   }
 
   return (
     <Router>
-      <HeaderNavigation />
+      <HeaderNavigation setUserFunc = {setUserFunc} />
       <main className={styles.main}>
         <Switch>
           <Route path="/login">

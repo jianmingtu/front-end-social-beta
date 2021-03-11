@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory } from "react-router-dom"
 import Login from '../components/auth/Login'
-import * as network from '../network'
 import {CONS_EMAIL, CONS_PASSWORD,CONS_USERNAME, CONS_PHOTO }  from '../constant'
+import { signUp, loginUser } from '../network/userAuth'
 
 export default function PostPage({setUserFunc}) {
 
@@ -19,15 +19,16 @@ export default function PostPage({setUserFunc}) {
           const username = e.target.elements[CONS_USERNAME]?.value;
           const photo = e.target.elements[CONS_PHOTO]?.value;
   
-          network.signUp({email, password, username, photo})
+          // signUp({email, password, username, photo})
+          await signUp({email, password, username, photo})
         } 
         else 
         {
-          // login request
+          // loginUser request
           const username = e.target.elements[CONS_USERNAME]?.value;
           const password = e.target.elements[CONS_PASSWORD]?.value;
   
-          network.login({ username, password})
+          loginUser({ username, password})
         }
         // routing to the HOME page after successfully signup or login
         history.push("/")
