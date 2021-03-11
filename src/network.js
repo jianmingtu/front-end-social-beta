@@ -7,7 +7,6 @@ import { upload } from './s3'
 
 export async function createPost({data}) {
   try {
-    console.log(data.imageFile.files[0].path)
     if(data.imageFile) {
       upload(data.imageFile.files[0])
     }
