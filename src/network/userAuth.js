@@ -20,11 +20,7 @@ export function signUp({username, password, email}) {
       new CognitoUserAttribute({
         Name: 'email',
         Value: email,
-      }),
-      // new CognitoUserAttribute({
-      //   Name: 'full name',
-      //   Value: "hello this is my name",
-      // })
+      })
     ]
     
     userPool.signUp(username, password, attributeList, null, function( err, result) {
@@ -110,33 +106,13 @@ export function userToken() {
   })
 }
 
-export function user() {
-  // let user = null
-  // try {
-  //   const token = userToken();
-  //   user = jwtDecode(token)
-  // } catch (e) {
-  // }
-  // return user
-
-  return new Promise((resolve, reject) => {
-    const user = currentUser()
-    if (!user) {
-      reject(new Error("user not logged in"))
-      return
-    }
-    user.getSession((error, session) => {
-      if (error) {
-        reject(error)
-        return
-      }
-      resolve(session.getIdToken().getJwtToken())
-    })
-  }).then (token => {
-      return user = jwtDecode(token) 
-  }).catch(e => {}) 
+// the decode a user's Jwt Token and return
+export function currentDecodeUser() {
+  return userToken().then(JwtToken => { return (jwtDecode(JwtToken)) }).catch( e => {});
 }
 
+// remove token from local storage
 export function signOut() {
-  currentUser()?.signOut()
+  const user = currentUser();
+  if(user) user.signOut()
 }

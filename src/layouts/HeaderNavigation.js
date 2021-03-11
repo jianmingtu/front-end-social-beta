@@ -4,18 +4,18 @@ import PageHeader from '../components/PageHeader/PageHeader'
 import {signOut} from '../network/userAuth'
 
 
-export default function HeaderNavigation({setUserFunc}) {
+export default function HeaderNavigation({user, setUserFunc}) {
   
   const history = useHistory()
   
   const onSignOut = () => {
      console.log("Sign out")
-     signOut()
      setUserFunc(null)
      history.push("/")
    }
   return (
     <PageHeader 
+      user = {user}
       signOut={onSignOut}
     />
   )

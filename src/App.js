@@ -12,19 +12,21 @@ import UserProfilePage from './layouts/UserProfilePage'
 import PostPage from './layouts/PostPage'
 import PostDetailPage from './layouts/PostDetailPage'
 import styles from './App.module.css'
-import {user as getUser, signOut} from './network/userAuth'
+import {currentDecodeUser, signOut} from './network/userAuth'
 
 export default function App() {
-  const [user, setUser] = useState(getUser())
+  const _currentDecodeUser = await currentDecodeUser();
+  const [user, setUser] = useState(_currentDecodeUser)
 
-  const setUserFunc = user => {
-    setUser(user)
-    if(!user) signOut();
+  // update the current user state.  if update is falsely value,  call signOut to remove user tokens from local storage.  
+  const setUserFunc = userUpdate => {
+    setUser(userUpdate)
+    if(!userUpdate) signOut();
   }
 
   return (
     <Router>
-      <HeaderNavigation setUserFunc = {setUserFunc} />
+      <HeaderNavigation user = {user} setUserFunc = {setUserFunc} />
       <main className={styles.main}>
         <Switch>
           <Route path="/login">
