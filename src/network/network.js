@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { upload } from './s3'
+import { upload } from '../s3'
 
 // const multer = require('multer')
 // const upload = multer({ dest: 'uploads/' })
