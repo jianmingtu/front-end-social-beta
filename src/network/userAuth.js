@@ -5,10 +5,11 @@ import {
   AuthenticationDetails
 } from 'amazon-cognito-identity-js'
 import jwtDecode from 'jwt-decode'
+import config from '../config.json'
 
 var poolData = {
-	UserPoolId: 'us-east-2_gSslKueYh', // Your user pool id here
-	ClientId: '1kh3f2b4thhdveuumtn9tqgb4v', // Your client id here
+	UserPoolId: config.poolData.USER_POOL_ID, // Your user pool id here
+	ClientId: config.poolData.CLIENT_ID, // Your client id here
 };
 
 
@@ -25,8 +26,7 @@ export function signUp({username, password, email}) {
     
     userPool.signUp(username, password, attributeList, null, function( err, result) {
       if (err) {
-        alert(err.message || JSON.stringify(err));
-        reject(err)
+        reject (err.message || JSON.stringify(err))
         return;
       }
       const cognitoUser = result.user;
@@ -46,11 +46,9 @@ export function confirmUser({code, username}) {
     const cognitoUser = new CognitoUser(userData)
     cognitoUser.confirmRegistration(code, true, function(err, result) {
       if (err) {
-        alert(err.message || JSON.stringify(err))
-        reject(err)
+        reject (err.message || JSON.stringify(err))
         return
       }
-      console.log('call result: ' + result)
       resolve(result)
     })
   })
@@ -77,9 +75,9 @@ export function loginUser({username, password}) {
       },
     
       onFailure: function(err) {
-        reject(err)
-        alert(err.message || JSON.stringify(err));
-      },
+        reject (err.message || JSON.stringify(err))
+        return
+      }
     });
   })
 }
