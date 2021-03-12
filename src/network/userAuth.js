@@ -5,10 +5,11 @@ import {
   AuthenticationDetails
 } from 'amazon-cognito-identity-js'
 import jwtDecode from 'jwt-decode'
+import config from '../config.json'
 
 var poolData = {
-	UserPoolId: 'us-east-2_gSslKueYh', // Your user pool id here
-	ClientId: '1kh3f2b4thhdveuumtn9tqgb4v', // Your client id here
+	UserPoolId: config.poolData.USER_POOL_ID, // Your user pool id here
+	ClientId: config.poolData.CLIENT_ID, // Your client id here
 };
 
 
