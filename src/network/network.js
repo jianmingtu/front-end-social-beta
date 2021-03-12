@@ -18,18 +18,18 @@ export async function createPost({data}) {
 
     console.log(data)
 
-    // if(data.imageFile) {
-    //   upload(data.imageFile.files[0])
-    // }
+    let ret = null;
+    if(data.imageFile) {
+      ret = await upload(data.imageFile.files[0])
+    }
 
-    // upload.single('image')
+    //upload.single('image')
     
-    console.log(...data)
     //Send the JWT in the header of the axios requests from the client
-    await axios.post(`/api/posts`, ...data
+    await axios.post(`/api/posts`, { ...data, imageFile: ret?.location} 
     , { headers: authHeader() })
 
-  } catch (error) {
-    throw (error.response.data.error ? Error(error.response.data.error) : error)
+  } catch (err) {
+    throw (err.message || JSON.stringify(err))
   }
 }  
