@@ -4,7 +4,7 @@ import Post from '../components/PostPage/Post'
 import { createPost } from '../network/network'
 
 
-export default function PostPage() {
+export default function PostPage({user}) {
   
   const [newPostError, setNewPostError] = useState("");
   
@@ -19,7 +19,7 @@ export default function PostPage() {
 
   return (
     <>
-    <Post submitPost={submitPost} newPostError={newPostError}/>
+    <Post submitPost={submitPost} user = {user} newPostError={newPostError}/>
     </>
   )
 }

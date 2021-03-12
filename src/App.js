@@ -43,7 +43,7 @@ export default function App() {
             <PostDetailPage />
           </Route>
           <Route path="/">
-            <PostPage />
+            <PostPage user = {user} />
           </Route>
         </Switch>
       </main>

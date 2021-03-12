@@ -3,10 +3,10 @@ import React, { useEffect, useState } from 'react'
 import NewPostForm from './NewPostForm'
 import styles from './Post.module.css'
 
-export default function Post({submitPost, newPostError}) {
+export default function Post({submitPost, user, newPostError}) {
   return (
     <div className={styles.container}>
-      <NewPostForm submitPost={submitPost} newPostError={newPostError} />
+      {!!user && <NewPostForm submitPost={submitPost} newPostError={newPostError} />}
       <div className={styles.postContainer}>
         <span className={styles.postUser}>
           <span className={styles.user}>
