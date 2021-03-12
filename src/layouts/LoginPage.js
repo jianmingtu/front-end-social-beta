@@ -7,7 +7,7 @@ import { signUp, loginUser, currentDecodeUser } from '../network/userAuth'
 export default function PostPage({setUserFunc}) {
 
   const history = useHistory()
-  const [error, setError] = useState()   
+  const [error, setError] = useState("")  
 
   const authFunc = async (e) => {
       try {
@@ -21,6 +21,7 @@ export default function PostPage({setUserFunc}) {
   
           // signUp({email, password, username, photo})
           await signUp({email, password, username, photo})
+          alert("I's so glad you registered for the socialCafe. You will find a confirmation email sent from SocialCafe including a link. You will be able to click the link and then create your post or write your comments.  Enjoy your journey with SocialCafe.");
         } 
         else 
         {

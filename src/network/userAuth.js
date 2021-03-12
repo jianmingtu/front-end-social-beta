@@ -26,8 +26,7 @@ export function signUp({username, password, email}) {
     
     userPool.signUp(username, password, attributeList, null, function( err, result) {
       if (err) {
-        alert(err.message || JSON.stringify(err));
-        reject(err)
+        reject (err.message || JSON.stringify(err))
         return;
       }
       const cognitoUser = result.user;
@@ -47,11 +46,9 @@ export function confirmUser({code, username}) {
     const cognitoUser = new CognitoUser(userData)
     cognitoUser.confirmRegistration(code, true, function(err, result) {
       if (err) {
-        alert(err.message || JSON.stringify(err))
-        reject(err)
+        reject (err.message || JSON.stringify(err))
         return
       }
-      console.log('call result: ' + result)
       resolve(result)
     })
   })
@@ -78,9 +75,9 @@ export function loginUser({username, password}) {
       },
     
       onFailure: function(err) {
-        reject(err)
-        alert(err.message || JSON.stringify(err));
-      },
+        reject (err.message || JSON.stringify(err))
+        return
+      }
     });
   })
 }
