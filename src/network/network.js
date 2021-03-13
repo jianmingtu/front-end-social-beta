@@ -10,7 +10,10 @@ async function authHeader() {
   if (!token) {
     return {}
   }
-  return { Authorization: `Bearer ${token}` }
+  return { Authorization: `Bearer ${token}`,
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+  }
 }
 
 export async function createPost({data}) {
@@ -22,12 +25,11 @@ export async function createPost({data}) {
     if(data.imageFile) {
       ret = await upload(data.imageFile.files[0])
     }
-
-    //upload.single('image')
     
     //Send the JWT in the header of the axios requests from the client
-    await axios.post(`/api/posts`, { ...data, imageFile: ret?.location} 
-    , { headers: authHeader() })
+    const headers = await authHeader()
+    await axios.post(`${BASE_API}/posts`, { ...data, imageFile: ret?.location} 
+    , { headers})
 
   } catch (err) {
     throw (err.message || JSON.stringify(err))
