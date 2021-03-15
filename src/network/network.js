@@ -19,8 +19,8 @@ async function authHeader() {
 export async function getPosts() {
   try {
     const result = await axios.get(`${BASE_API}/posts`)
-    console.log(result.data)
-    return result.data
+    console.log(result)
+    return result.data.posts
   } catch (error) {
     console.log(error)
     alert(error.message)
@@ -49,7 +49,7 @@ export async function getPost({postId}) {
   try {
     const result = await axios.get(`${BASE_API}/posts/${postId}`)
     console.log(result)
-    return result.data
+    return result.data.posts
   } catch (error) {
     console.log(error)
   }

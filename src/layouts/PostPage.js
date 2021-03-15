@@ -15,7 +15,7 @@ export default function PostPage({user}) {
 
   const getAPI = async () => {
     const result = await getPosts()
-    setPosts(result.posts)
+    setPosts(result)
   }
 
   const submitPost = async (data) => {
