@@ -1,21 +1,38 @@
 import axios from 'axios'
-
 import { upload } from '../s3'
+import {userToken} from './userAuth'
 
-// const multer = require('multer')
-// const upload = multer({ dest: 'uploads/' })
+const BASE_API = "https://lpmp2m4ovd.execute-api.us-east-2.amazonaws.com/prod"
+// const BASE_API = "http://localhost:5000/"
+
+// get user JWT token from the user Cognito's local storage and create an Authorization header.
+async function authHeader() {
+  const token = await userToken()
+  if (!token) {
+    return {}
+  }
+  return { Authorization: `${token}`,
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+  }
+}
 
 export async function createPost({data}) {
   try {
+
+    console.log(data)
+
+    let ret = null;
     if(data.imageFile) {
-      upload(data.imageFile.files[0])
+      ret = await upload(data.imageFile.files[0])
     }
     
-    // upload.single('image')
-    // const result = await axios.post(`/api/posts`, {
-    //   ...data
-    // }, { headers: authHeader })
-  } catch (error) {
-    console.log(error)
+    //Send the JWT in the header of the axios requests from the client
+    const headers = await authHeader()
+    await axios.post(`${BASE_API}/posts`, { content: data.content, imageUrl: ret?.location} 
+    , { headers})
+
+  } catch (err) {
+    throw (err.message || JSON.stringify(err))
   }
-}
+}  

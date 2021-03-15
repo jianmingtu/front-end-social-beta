@@ -13,7 +13,7 @@ const ReactS3Client = new S3(s3Config)
 export function upload(file) {
   let fileName = file.name
 
-  ReactS3Client.uploadFile(file, fileName)
-    .then(data => console.log(data))
+  return ReactS3Client.uploadFile(file, fileName)
+    .then(data => {console.log(data); return data})
     .catch(err => console.log(err))
 }
