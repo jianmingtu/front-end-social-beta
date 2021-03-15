@@ -18,8 +18,7 @@ export default function PostDetailPage() {
     (async () => {
         const resultPost = await getPost({postId: postId})
         const resultComments = await getComment({postId: postId})
-        console.log(resultPost)
-        // setPost(resultPost.post)
+        setPost(resultPost.posts)
         // setComment(resultComments.comments)
     })()
   }, [])
@@ -27,6 +26,7 @@ export default function PostDetailPage() {
   return (
     //pass in comment list here for it to be rendered
     <PostDetail 
+      post={post}
       comments={comments}
       submitComment={submitComment}
     />

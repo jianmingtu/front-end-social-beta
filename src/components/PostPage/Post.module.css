@@ -38,6 +38,10 @@
   width: 80%;
 }
 
+.postImage {
+  max-width: 100%;
+}
+
 .likeComment {
   display: flex;
   justify-content: space-around;

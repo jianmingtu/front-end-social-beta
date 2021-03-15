@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import styles from './Post.module.css'
 
-export default function Post() {
+export default function Post({post}) {
   return (
     <div className={styles.postContainer}>
       <span className={styles.postUser}>
@@ -13,9 +13,9 @@ export default function Post() {
         <button>Options</button>
       </span>
       <span className={styles.postContent}>
-        <p>Post Content here</p>
+        <p>{post.content}</p>
+        <img className={styles.postImage} src={post.imageUrl} />
       </span>
-      <p>Image</p>
       <span className={styles.likeComment}>
         <span className={styles.buttonCounter}>
           <button>Icon</button>

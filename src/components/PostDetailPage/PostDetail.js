@@ -4,13 +4,14 @@ import UserComment from './UserComment'
 import CommentForm from './CommentForm'
 import styles from './PostDetail.module.css'
 
-export default function PostDetail() {
+export default function PostDetail({post, comments}) {
   return (
     <div className={styles.container}>
+      {console.log(post)}
       {
-        true ?
+        post.imageUrl ?
           <div className={styles.imageContainer}>
-            <img className={styles.image} src="https://cdn.discordapp.com/attachments/738356484462608424/816066240917405716/unknown.png" />
+            <img className={styles.image} src={post.imageUrl} />
           </div>
         :
           <span></span>
@@ -26,7 +27,7 @@ export default function PostDetail() {
             <button>Options</button>
           </span>
           <span className={styles.postContent}>
-            <p>Post Content here</p>
+            <p>{post.content}</p>
           </span>
           <span className={styles.likeComment}>
             <span className={styles.buttonCounter}>

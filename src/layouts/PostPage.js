@@ -23,7 +23,17 @@ export default function PostPage() {
   return (
     <div className={styles.container}>
       <NewPostForm submitPost={submitPost} />
-      <Post />
+      {
+        posts.length > 0 ?
+          posts.map(post => (
+            <Post 
+              key={post._id}
+              post={post}
+            />
+          ))
+        :
+          <p>No Post</p>
+      }
     </div>
   )
 }
