@@ -18,6 +18,7 @@ export default function PostDetailPage() {
     (async () => {
         const resultPost = await getPost({postId: postId})
         const resultComments = await getComment({postId: postId})
+        console.log(resultPost)
         // setPost(resultPost.post)
         // setComment(resultComments.comments)
     })()

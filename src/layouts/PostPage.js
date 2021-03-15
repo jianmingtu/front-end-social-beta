@@ -11,7 +11,7 @@ export default function PostPage() {
   useEffect(() => {
     (async () => {
       const result = await getPosts()
-      // setPosts(result.posts)
+      setPosts(result.posts)
     })()
   }, [])
 
