@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import styles from './NewPostForm.module.css'
 
-export default function NewPostForm({submitPost}) {
+export default function NewPostForm({submitPost, newPostError}) {
   const [showFileInput, setShowFileInput] = useState(false)
 
   const handleImage = (e) => {
@@ -29,7 +29,9 @@ export default function NewPostForm({submitPost}) {
             <input name="imageFile" type="file" accept="image/*" />
           : null
         }
+        {!!newPostError && <p>{newPostError}</p>}
       </form>
+
     </div>
   )
 }
