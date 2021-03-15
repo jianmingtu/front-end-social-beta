@@ -38,7 +38,7 @@ export default function PostPage({user}) {
               key={post._id}
               post={post}
             />
-          ))
+          )).reverse()
         :
           <p>No Post</p>
       }
