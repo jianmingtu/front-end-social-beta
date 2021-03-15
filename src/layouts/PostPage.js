@@ -10,16 +10,19 @@ export default function PostPage({user}) {
   const [newPostError, setNewPostError] = useState("")
 
   useEffect(() => {
-    (async () => {
-      const result = await getPosts()
-      setPosts(result.posts)
-    })()
+    getAPI()
   }, [])
+
+  const getAPI = async () => {
+    const result = await getPosts()
+    setPosts(result.posts)
+  }
 
   const submitPost = async (data) => {
     try {
       await createPost({data})
       console.log(data)
+      getAPI()
     } catch (error) {
       setNewPostError(error)
     }
