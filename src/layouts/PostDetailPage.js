@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 
 import PostDetail from '../components/PostDetailPage/PostDetail'
-import { getPost, getComment, createComment } from '../network/network'
+import { getPost, deletePost, getComment, createComment } from '../network/network'
 
 export default function PostDetailPage({user}) {
   const [post, setPost] = useState()
   const [comments, setComment] = useState()
 
   let { postId } = useParams()
+  const history = useHistory()
 
   useEffect(() => {
     (async () => {
@@ -28,7 +29,9 @@ export default function PostDetailPage({user}) {
   }
 
   const deleteButton = async (data) => {
-    console.log("delete")
+    // Insert confirm delete here
+    await deletePost({postId})
+    history.push(`/`)
   }
 
   return (

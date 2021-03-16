@@ -39,7 +39,6 @@ export async function createPost({data}) {
     const headers = await authHeader()
     await axios.post(`${BASE_API}/posts`, { content: data.content, imageUrl: ret?.location } 
       , { headers })
-
   } catch (err) {
     throw (err.message || JSON.stringify(err))
   }
