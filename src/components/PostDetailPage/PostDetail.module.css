@@ -22,6 +22,14 @@
   padding: 1rem;
 }
 
+.detailFull {
+  display: flex;
+  flex-direction: column;
+  background-color: #FFFFFF;
+  width: 100%;
+  padding: 1rem;
+}
+
 .postContainer {
   display: flex;
   flex-direction: column;

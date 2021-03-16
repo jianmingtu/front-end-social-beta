@@ -1,25 +1,47 @@
 import React, { useEffect, useState } from 'react'
 
 import Post from '../components/PostPage/Post'
-import { createPost } from '../network/network'
-
+import NewPostForm from '../components/PostPage/NewPostForm'
+import { getPosts, createPost } from '../network/network'
+import styles from './Layout.module.css'
 
 export default function PostPage({user}) {
-  
-  const [newPostError, setNewPostError] = useState("");
-  
+  const [posts, setPosts] = useState([])
+  const [newPostError, setNewPostError] = useState("")
+
+  useEffect(() => {
+    getAPI()
+  }, [])
+
+  const getAPI = async () => {
+    const result = await getPosts()
+    setPosts(result)
+  }
+
   const submitPost = async (data) => {
     try {
       await createPost({data})
       console.log(data)
+      getAPI()
     } catch (error) {
       setNewPostError(error)
     }
   }
 
   return (
-    <>
-    <Post submitPost={submitPost} user = {user} newPostError={newPostError}/>
-    </>
+    <div className={styles.container}>
+      {!!user && <NewPostForm submitPost={submitPost} newPostError={newPostError} />}
+      {
+        posts.length > 0 ?
+          posts.map(post => (
+            <Post 
+              key={post._id}
+              post={post}
+            />
+          )).reverse()
+        :
+          <p>No Post</p>
+      }
+    </div>
   )
 }

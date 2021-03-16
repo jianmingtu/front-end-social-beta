@@ -12,6 +12,8 @@ export default function NewPostForm({submitPost, newPostError}) {
   const handleNewPost = (e) => {
     e.preventDefault()
     submitPost({content: e.target.content.value, imageFile: e.target.imageFile})
+    e.target.content.value = ""
+    e.target.imageFile.value = ""
   }
 
   return (
