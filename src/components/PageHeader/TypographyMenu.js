@@ -1,17 +1,17 @@
-import React from 'react';
-import MenuList from '@material-ui/core/MenuList';
-import MenuItem from '@material-ui/core/MenuItem';
-import Paper from '@material-ui/core/Paper';
-import { makeStyles } from '@material-ui/core/styles';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import Typography from '@material-ui/core/Typography';
+import React from 'react'
+import MenuList from '@material-ui/core/MenuList'
+import MenuItem from '@material-ui/core/MenuItem'
+import Paper from '@material-ui/core/Paper'
+import { makeStyles } from '@material-ui/core/styles'
+import ListItemIcon from '@material-ui/core/ListItemIcon'
+import Typography from '@material-ui/core/Typography'
 import {signOutIcon, settingIcon} from '../SVG'
 
 const useStyles = makeStyles({
   root: {
     width: 230,
   },
-});
+})
 
 export default function TypographyMenu({signOut}) {
   const classes = useStyles();
@@ -27,7 +27,7 @@ export default function TypographyMenu({signOut}) {
         </MenuItem>
         <MenuItem>
           <ListItemIcon>
-							{signOutIcon}
+            {signOutIcon}
           </ListItemIcon>
           <Typography variant="inherit" noWrap onClick={signOut}>
             Sign Out 
@@ -35,5 +35,5 @@ export default function TypographyMenu({signOut}) {
         </MenuItem>
       </MenuList>
     </Paper>
-  );
+  )
 }

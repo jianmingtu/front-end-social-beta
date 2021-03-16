@@ -13,7 +13,8 @@ export default function NewPostForm({submitPost, newPostError}) {
     e.preventDefault()
     submitPost({content: e.target.content.value, imageFile: e.target.imageFile})
     e.target.content.value = ""
-    e.target.imageFile.value = ""
+    if(e.target.imageFile)
+      e.target.imageFile.value = ""
   }
 
   return (

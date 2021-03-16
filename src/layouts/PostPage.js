@@ -28,6 +28,14 @@ export default function PostPage({user}) {
     }
   }
 
+  const editButton = async (data) => {
+    console.log("edit")
+  }
+
+  const deleteButton = async (data) => {
+    console.log("delete")
+  }
+
   return (
     <div className={styles.container}>
       {!!user && <NewPostForm submitPost={submitPost} newPostError={newPostError} />}
@@ -37,6 +45,9 @@ export default function PostPage({user}) {
             <Post 
               key={post._id}
               post={post}
+              user={user}
+              editButton={editButton}
+              deleteButton={deleteButton}
             />
           )).reverse()
         :
