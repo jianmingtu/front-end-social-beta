@@ -18,7 +18,7 @@ export default function PostDetail({post, comments}) {
       }
       {
         post ?
-          <div className={styles.detailContainer}>
+          <div className={post.imageUrl ? styles.detailContainer : styles.detailFull}>
             <div className={styles.postContainer}>
               <span className={styles.postUser}>
                 <span className={styles.user}>

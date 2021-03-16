@@ -16,10 +16,10 @@ export default function PostDetailPage() {
 
   useEffect(() => {
     (async () => {
-        const resultPost = await getPost({postId: postId})
-        const resultComments = await getComment({postId: postId})
-        setPost(resultPost)
-        // setComment(resultComments.comments)
+      const resultPost = await getPost({postId: postId})
+      const resultComments = await getComment({postId: postId})
+      setPost(resultPost)
+      // setComment(resultComments.comments)
     })()
   }, [])
 

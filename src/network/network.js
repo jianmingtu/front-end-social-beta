@@ -49,7 +49,8 @@ export async function getPost({postId}) {
   try {
     const result = await axios.get(`${BASE_API}/posts/${postId}`)
     console.log(result)
-    return result.data.posts
+    console.log(result.data.post)
+    return result.data.post
   } catch (error) {
     console.log(error)
   }
