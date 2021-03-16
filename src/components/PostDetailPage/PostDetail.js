@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react'
 
 import UserComment from './UserComment'
 import CommentForm from './CommentForm'
+import OptionMenu from '../OptionMenu'
 import styles from './PostDetail.module.css'
 
-export default function PostDetail({post, comments}) {
+export default function PostDetail({post, comments, user, submitComment, editButton, deleteButton}) {
   return (
     <div className={styles.container}>
       {console.log(post)}
@@ -25,7 +26,12 @@ export default function PostDetail({post, comments}) {
                   <img className={styles.avatar} src="https://cdn.discordapp.com/attachments/738356484462608424/816066240917405716/unknown.png" />
                   <p>Seal</p>
                 </span>
-                <button>Options</button>
+                {
+                  post.user.id == user.sub ?
+                    <OptionMenu editButton={editButton} deleteButton={deleteButton} />
+                  :
+                    <button>Follow</button>
+                }
               </span>
               <span className={styles.postContent}>
                 <p>{post.content}</p>

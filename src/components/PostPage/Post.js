@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import OptionMenu from './OptionMenu'
+import OptionMenu from '../OptionMenu'
 import styles from './Post.module.css'
 
 export default function Post({post, user, editButton, deleteButton}) {
