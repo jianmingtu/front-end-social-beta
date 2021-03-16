@@ -7,7 +7,7 @@ import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import Fade from '@material-ui/core/Fade'
 
-export default function OptionMenu({editButton, deleteButton}) {
+export default function OptionMenu({editButton, deleteButton, postId}) {
   const [anchorEl, setAnchorEl] = React.useState(null)
   const open = Boolean(anchorEl)
 
@@ -40,7 +40,6 @@ export default function OptionMenu({editButton, deleteButton}) {
           vertical: "top",
           horizontal: "center"
         }}
-
       >
         <Paper>
           <MenuList>
@@ -50,7 +49,7 @@ export default function OptionMenu({editButton, deleteButton}) {
               </Typography>
             </MenuItem>
             <MenuItem>
-              <Typography variant="inherit" noWrap onClick={deleteButton}>
+              <Typography variant="inherit" noWrap onClick={deleteButton} name={postId}>
                 Delete
               </Typography>
             </MenuItem>

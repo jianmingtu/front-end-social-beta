@@ -13,7 +13,7 @@ export default function Post({post, user, editButton, deleteButton}) {
         </span>
         {
           post.user.id == user.sub ?
-            <OptionMenu editButton={editButton} deleteButton={deleteButton} />
+            <OptionMenu editButton={editButton} deleteButton={deleteButton} postId={post._id} />
           :
             <button>Follow</button>
         }

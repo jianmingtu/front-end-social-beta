@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import Post from '../components/PostPage/Post'
 import NewPostForm from '../components/PostPage/NewPostForm'
-import { getPosts, createPost } from '../network/network'
+import { getPosts, createPost, updatePost, deletePost } from '../network/network'
 import styles from './Layout.module.css'
 
 export default function PostPage({user}) {
@@ -33,7 +33,10 @@ export default function PostPage({user}) {
   }
 
   const deleteButton = async (data) => {
-    console.log("delete")
+    const postId = data.target.attributes[1].value
+    // Insert deletion warning here
+    await deletePost({postId})
+    getAPI()
   }
 
   return (
