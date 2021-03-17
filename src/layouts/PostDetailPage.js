@@ -17,17 +17,23 @@ export default function PostDetailPage({user}) {
   }, [])
 
   const getPostAPI = async () => {
-    const resultPost = await getPost({postId: postId})
+    const resultPost = await getPost({postId})
     setPost(resultPost)
   }
 
   const getCommentAPI = async () => {
-    const resultComments = await getComment({postId: postId})
-    // setComment(resultComments.comments)
+    const resultComments = await getComment({postId})
+    setComment(resultComments)
   }
 
   const submitComment = async (data) => {
-    await createComment({data, postId: postId})
+    try {
+      await createComment({data, postId})
+      console.log(data)
+      getCommentAPI()
+    } catch (error) {
+      alert(error)
+    }
   }
 
   const submitEdit = async (data) => {

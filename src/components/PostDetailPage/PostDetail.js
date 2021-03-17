@@ -77,7 +77,7 @@ export default function PostDetail({post, comments, user, submitEdit, deleteButt
               </span>
             </div>
             <span className={styles.commentContainer}>
-              <CommentForm /> {/* This form will handle comment to the post */}
+              <CommentForm submitComment={submitComment} /> {/* This form will handle comment to the post */}
               <UserComment />
             </span>
           </div>

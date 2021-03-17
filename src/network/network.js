@@ -78,21 +78,21 @@ export async function deletePost({postId}) {
 }
 
 export async function getComment({postId}) {
-  // don't think we got the comment database set up yet
-  // try {
-  //   const result = await axios.get(`/api/posts/${postId}/comments`, { headers: authHeader })
-  //   return result.data
-  // } catch (error) {
-  //   console.log(error)
-  // }
+  try {
+    const result = await axios.get(`${BASE_API}/posts/${postId}/comments`)
+    console.log(result)
+    return result.data.comments
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 export async function createComment({data, postId}) {
-  // try {
-  //   const result = await axios.post(`/api/posts/${postId}/comments`, {
-  //     ...data
-  //   }, { headers: authHeader })
-  // } catch (error) {
-  //   console.log(error)
-  // }
+  try {
+    const headers = await authHeader()
+    const result = await axios.post(`${BASE_API}/posts/${postId}/comments`, { content: data.content }
+      , { headers })
+  } catch (error) {
+    console.log(error)
+  }
 }
