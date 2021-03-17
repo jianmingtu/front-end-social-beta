@@ -16,7 +16,7 @@ export default function UserComment({comment, user, submitEditComment, deleteCom
 
   const handleSubmitEdit = (e) => {
     e.preventDefault()
-    submitEditComment({content: e.target.content.value})
+    submitEditComment({body: {content: e.target.content.value}, commentId: comment._id})
     setEditing(false)
   }
 

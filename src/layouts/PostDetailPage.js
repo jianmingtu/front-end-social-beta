@@ -53,7 +53,13 @@ export default function PostDetailPage({user}) {
   }
 
   const submitEditComment = async (data) => {
-    console.log("edit")
+    try {
+      await updateComment(data.body, postId, data.commentId)
+      console.log(data)
+      getCommentAPI()
+    } catch (error) {
+      alert(error)
+    }
   }
 
   const deleteCommentButton = async (data) => {

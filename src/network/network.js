@@ -98,17 +98,17 @@ export async function createComment({data, postId}) {
 }
 
 export async function updateComment(data, postId, commentId) {
-  // try {
-  //   console.log(data)
+  try {
+    console.log(data)
 
-  //   //Send the JWT in the header of the axios requests from the client
-  //   const headers = await authHeader()
-  //   await axios.put(`${BASE_API}/posts/${postId}`, { content: data.content } 
-  //     , { headers })
+    //Send the JWT in the header of the axios requests from the client
+    const headers = await authHeader()
+    await axios.put(`${BASE_API}/posts/${postId}/comments/${commentId}`, { content: data.content } 
+      , { headers })
 
-  // } catch (err) {
-  //   throw (err.message || JSON.stringify(err))
-  // }
+  } catch (err) {
+    throw (err.message || JSON.stringify(err))
+  }
 }
 
 export async function deleteComment({postId, commentId}) {
