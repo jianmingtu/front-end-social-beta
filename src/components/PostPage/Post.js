@@ -28,10 +28,12 @@ export default function Post({post, user, submitEdit, deleteButton}) {
           <p>Seal</p>
         </span>
         {
-          post.user.id == user.sub ?
-            <OptionMenu editButton={editButton} deleteButton={deleteButton} postId={post._id} />
-          :
-            <button>Follow</button>
+          !!user ?
+            post.user.id == user.sub ?
+              <OptionMenu editButton={editButton} deleteButton={deleteButton} postId={post._id} />
+            :
+              <button>Follow</button>
+          : null
         }
       </span>
       <span className={styles.postContent}>

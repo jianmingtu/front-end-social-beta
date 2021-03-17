@@ -43,10 +43,12 @@ export default function PostDetail({post, comments, user, submitEdit, deleteButt
                   <p>Seal</p>
                 </span>
                 {
-                  post.user.id == user.sub ?
-                    <OptionMenu editButton={editButton} deleteButton={deleteButton} />
-                  :
-                    <button>Follow</button>
+                  !!user ?
+                    post.user.id == user.sub ?
+                      <OptionMenu editButton={editButton} deleteButton={deleteButton} />
+                    :
+                      <button>Follow</button>
+                  : null
                 }
               </span>
               <span className={styles.postContent}>
