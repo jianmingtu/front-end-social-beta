@@ -2,9 +2,26 @@ import React, { useEffect, useState } from 'react'
 
 import UserComment from './UserComment'
 import CommentForm from './CommentForm'
+import OptionMenu from '../OptionMenu'
 import styles from './PostDetail.module.css'
 
-export default function PostDetail({post, comments}) {
+export default function PostDetail({post, comments, user, submitEdit, deleteButton, submitComment}) {
+  const [editing, setEditing] = useState(false)
+
+  const editButton = (e) => {
+    setEditing(true)
+  }
+
+  const cancelEdit = (e) => {
+    setEditing(false)
+  }
+
+  const handleSubmitEdit = (e) => {
+    e.preventDefault()
+    submitEdit({content: e.target.content.value})
+    setEditing(false)
+  }
+
   return (
     <div className={styles.container}>
       {console.log(post)}
@@ -25,10 +42,28 @@ export default function PostDetail({post, comments}) {
                   <img className={styles.avatar} src="https://cdn.discordapp.com/attachments/738356484462608424/816066240917405716/unknown.png" />
                   <p>Seal</p>
                 </span>
-                <button>Options</button>
+                {
+                  !!user ?
+                    post.user.id == user.sub ?
+                      <OptionMenu editButton={editButton} deleteButton={deleteButton} />
+                    :
+                      <button>Follow</button>
+                  : null
+                }
               </span>
               <span className={styles.postContent}>
-                <p>{post.content}</p>
+                {
+                  editing ? 
+                    <form className={styles.inputForm} onSubmit={handleSubmitEdit}>
+                      <textarea className={styles.formText} name="content">{post.content}</textarea>
+                      <span className={styles.formButton}>
+                        <button type="button" onClick={cancelEdit}>Cancel</button>
+                        <button type="submit">Post</button>
+                      </span>
+                    </form>
+                  :
+                    <p>{post.content}</p>
+                }
               </span>
               <span className={styles.likeComment}>
                 <span className={styles.buttonCounter}>

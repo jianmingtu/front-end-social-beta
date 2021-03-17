@@ -39,7 +39,6 @@ export async function createPost({data}) {
     const headers = await authHeader()
     await axios.post(`${BASE_API}/posts`, { content: data.content, imageUrl: ret?.location } 
       , { headers })
-
   } catch (err) {
     throw (err.message || JSON.stringify(err))
   }
@@ -49,8 +48,30 @@ export async function getPost({postId}) {
   try {
     const result = await axios.get(`${BASE_API}/posts/${postId}`)
     console.log(result)
-    console.log(result.data.post)
     return result.data.post
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export async function updatePost(data, postId) {
+  try {
+    console.log(data)
+
+    //Send the JWT in the header of the axios requests from the client
+    const headers = await authHeader()
+    await axios.put(`${BASE_API}/posts/${postId}`, { content: data.content } 
+      , { headers })
+
+  } catch (err) {
+    throw (err.message || JSON.stringify(err))
+  }
+}
+
+export async function deletePost({postId}) {
+  try {
+    const headers = await authHeader()
+    await axios.delete(`${BASE_API}/posts/${postId}`, { headers })
   } catch (error) {
     console.log(error)
   }

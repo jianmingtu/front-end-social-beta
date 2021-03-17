@@ -1,34 +1,60 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 
 import PostDetail from '../components/PostDetailPage/PostDetail'
-import { getPost, getComment, createComment } from '../network/network'
+import { getPost, updatePost, deletePost, getComment, createComment } from '../network/network'
 
-export default function PostDetailPage() {
+export default function PostDetailPage({user}) {
   const [post, setPost] = useState()
   const [comments, setComment] = useState()
 
   let { postId } = useParams()
+  const history = useHistory()
 
-  const submitComment = async data => {
+  useEffect(() => {
+    getPostAPI()
+    getCommentAPI()
+  }, [])
+
+  const getPostAPI = async () => {
+    const resultPost = await getPost({postId: postId})
+    setPost(resultPost)
+  }
+
+  const getCommentAPI = async () => {
+    const resultComments = await getComment({postId: postId})
+    // setComment(resultComments.comments)
+  }
+
+  const submitComment = async (data) => {
     await createComment({data, postId: postId})
   }
 
-  useEffect(() => {
-    (async () => {
-      const resultPost = await getPost({postId: postId})
-      const resultComments = await getComment({postId: postId})
-      setPost(resultPost)
-      // setComment(resultComments.comments)
-    })()
-  }, [])
+  const submitEdit = async (data) => {
+    try {
+      await updatePost(data, postId)
+      console.log(data)
+      getPostAPI()
+    } catch (error) {
+      alert(error)
+    }
+  }
+
+  const deleteButton = async (data) => {
+    // Insert confirm delete here
+    await deletePost({postId})
+    history.push(`/`)
+  }
 
   return (
     //pass in comment list here for it to be rendered
     <PostDetail 
       post={post}
       comments={comments}
+      user={user}
       submitComment={submitComment}
+      submitEdit={submitEdit}
+      deleteButton={deleteButton}
     />
   )
 }

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import Post from '../components/PostPage/Post'
 import NewPostForm from '../components/PostPage/NewPostForm'
-import { getPosts, createPost } from '../network/network'
+import { getPosts, createPost, updatePost, deletePost } from '../network/network'
 import styles from './Layout.module.css'
 
 export default function PostPage({user}) {
@@ -28,6 +28,23 @@ export default function PostPage({user}) {
     }
   }
 
+  const submitEdit = async (data) => {
+    try {
+      await updatePost(data.body, data.postId)
+      console.log(data)
+      getAPI()
+    } catch (error) {
+      alert(error)
+    }
+  }
+
+  const deleteButton = async (data) => {
+    const postId = data.target.attributes[1].value
+    // Insert deletion warning here
+    await deletePost({postId})
+    getAPI()
+  }
+
   return (
     <div className={styles.container}>
       {!!user && <NewPostForm submitPost={submitPost} newPostError={newPostError} />}
@@ -37,6 +54,9 @@ export default function PostPage({user}) {
             <Post 
               key={post._id}
               post={post}
+              user={user}
+              submitEdit={submitEdit}
+              deleteButton={deleteButton}
             />
           )).reverse()
         :

@@ -67,6 +67,28 @@
   width: 80%;
 }
 
+.inputForm {
+  display: flex;
+  flex-direction: column;
+  margin-left: 5%;
+  width: 100%;
+}
+
+.formText {
+  min-height: 5rem;
+  border: none;
+  background-color: #E5E5E5;
+  border-radius: 0.25rem;
+}
+
+.formButton {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1rem;
+  padding: 0.5rem;
+  border-top: 1px solid #000000;
+}
+
 .commentContainer > * {
   margin: 1rem 0;
 }
