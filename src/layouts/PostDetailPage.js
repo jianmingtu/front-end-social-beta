@@ -6,7 +6,7 @@ import { getPost, updatePost, deletePost, getComment, createComment } from '../n
 
 export default function PostDetailPage({user}) {
   const [post, setPost] = useState()
-  const [comments, setComment] = useState()
+  const [comments, setComment] = useState([])
 
   let { postId } = useParams()
   const history = useHistory()
