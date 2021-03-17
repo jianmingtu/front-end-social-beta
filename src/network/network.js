@@ -54,7 +54,7 @@ export async function getPost({postId}) {
   }
 }
 
-export async function updatePost({data, postId}) {
+export async function updatePost(data, postId) {
   try {
     console.log(data)
 

@@ -28,8 +28,14 @@ export default function PostPage({user}) {
     }
   }
 
-  const editButton = async (data) => {
-    console.log("edit")
+  const submitEdit = async (data) => {
+    try {
+      await updatePost(data.body, data.postId)
+      console.log(data)
+      getAPI()
+    } catch (error) {
+      alert(error)
+    }
   }
 
   const deleteButton = async (data) => {
@@ -49,7 +55,7 @@ export default function PostPage({user}) {
               key={post._id}
               post={post}
               user={user}
-              editButton={editButton}
+              submitEdit={submitEdit}
               deleteButton={deleteButton}
             />
           )).reverse()
