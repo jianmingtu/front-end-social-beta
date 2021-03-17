@@ -46,10 +46,18 @@ export default function PostDetailPage({user}) {
     }
   }
 
-  const deleteButton = async (data) => {
+  const deleteButton = async () => {
     // Insert confirm delete here
     await deletePost({postId})
     history.push(`/`)
+  }
+
+  const submitEditComment = async (data) => {
+    console.log("edit")
+  }
+
+  const deleteCommentButton = async () => {
+    console.log("delete")
   }
 
   return (
@@ -61,6 +69,8 @@ export default function PostDetailPage({user}) {
       submitComment={submitComment}
       submitEdit={submitEdit}
       deleteButton={deleteButton}
+      submitEditComment={submitEditComment}
+      deleteCommentButton={deleteCommentButton}
     />
   )
 }
