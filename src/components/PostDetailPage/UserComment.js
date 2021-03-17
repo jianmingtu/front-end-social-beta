@@ -30,7 +30,7 @@ export default function UserComment({comment, user, submitEditComment, deleteCom
             {
               !!user ?
                 comment.user.id == user.sub ?
-                  <OptionMenu editButton={editButton} deleteButton={deleteCommentButton} />
+                  <OptionMenu editButton={editButton} deleteButton={deleteCommentButton} thisId={comment._id} />
                 :
                   <button>Follow</button>
               : null

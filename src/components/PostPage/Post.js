@@ -30,7 +30,7 @@ export default function Post({post, user, submitEdit, deleteButton}) {
         {
           !!user ?
             post.user.id == user.sub ?
-              <OptionMenu editButton={editButton} deleteButton={deleteButton} postId={post._id} />
+              <OptionMenu editButton={editButton} deleteButton={deleteButton} thisId={post._id} />
             :
               <button>Follow</button>
           : null

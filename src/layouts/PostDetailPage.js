@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams, useHistory } from 'react-router-dom'
 
 import PostDetail from '../components/PostDetailPage/PostDetail'
-import { getPost, updatePost, deletePost, getComment, createComment } from '../network/network'
+import { getPost, updatePost, deletePost, getComments, createComment, updateComment, deleteComment } from '../network/network'
 
 export default function PostDetailPage({user}) {
   const [post, setPost] = useState()
@@ -22,7 +22,7 @@ export default function PostDetailPage({user}) {
   }
 
   const getCommentAPI = async () => {
-    const resultComments = await getComment({postId})
+    const resultComments = await getComments({postId})
     setComment(resultComments)
   }
 
@@ -56,8 +56,11 @@ export default function PostDetailPage({user}) {
     console.log("edit")
   }
 
-  const deleteCommentButton = async () => {
-    console.log("delete")
+  const deleteCommentButton = async (data) => {
+    const commentId = data.target.attributes[1].value
+    // Insert confirm delete here
+    await deleteComment({postId, commentId})
+    getCommentAPI()
   }
 
   return (
