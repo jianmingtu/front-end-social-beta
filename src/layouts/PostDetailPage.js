@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams, useHistory } from 'react-router-dom'
 
 import PostDetail from '../components/PostDetailPage/PostDetail'
-import { getPost, deletePost, getComment, createComment } from '../network/network'
+import { getPost, updatePost, deletePost, getComment, createComment } from '../network/network'
 
 export default function PostDetailPage({user}) {
   const [post, setPost] = useState()
@@ -12,20 +12,32 @@ export default function PostDetailPage({user}) {
   const history = useHistory()
 
   useEffect(() => {
-    (async () => {
-      const resultPost = await getPost({postId: postId})
-      const resultComments = await getComment({postId: postId})
-      setPost(resultPost)
-      // setComment(resultComments.comments)
-    })()
+    getPostAPI()
+    getCommentAPI()
   }, [])
+
+  const getPostAPI = async () => {
+    const resultPost = await getPost({postId: postId})
+    setPost(resultPost)
+  }
+
+  const getCommentAPI = async () => {
+    const resultComments = await getComment({postId: postId})
+    // setComment(resultComments.comments)
+  }
 
   const submitComment = async (data) => {
     await createComment({data, postId: postId})
   }
 
-  const editButton = async (data) => {
-    console.log("edit")
+  const submitEdit = async (data) => {
+    try {
+      await updatePost(data, postId)
+      console.log(data)
+      getPostAPI()
+    } catch (error) {
+      alert(error)
+    }
   }
 
   const deleteButton = async (data) => {
@@ -41,7 +53,7 @@ export default function PostDetailPage({user}) {
       comments={comments}
       user={user}
       submitComment={submitComment}
-      editButton={editButton}
+      submitEdit={submitEdit}
       deleteButton={deleteButton}
     />
   )
