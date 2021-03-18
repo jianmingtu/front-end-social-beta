@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { useParams, useHistory } from 'react-router-dom'
 
 import PostDetail from '../components/PostDetailPage/PostDetail'
-import { getPost, updatePost, deletePost, getComment, createComment } from '../network/network'
+import { getPost, updatePost, deletePost, getComments, createComment, updateComment, deleteComment } from '../network/network'
 
 export default function PostDetailPage({user}) {
   const [post, setPost] = useState()
-  const [comments, setComment] = useState()
+  const [comments, setComment] = useState([])
 
   let { postId } = useParams()
   const history = useHistory()
@@ -17,17 +17,23 @@ export default function PostDetailPage({user}) {
   }, [])
 
   const getPostAPI = async () => {
-    const resultPost = await getPost({postId: postId})
+    const resultPost = await getPost({postId})
     setPost(resultPost)
   }
 
   const getCommentAPI = async () => {
-    const resultComments = await getComment({postId: postId})
-    // setComment(resultComments.comments)
+    const resultComments = await getComments({postId})
+    setComment(resultComments)
   }
 
   const submitComment = async (data) => {
-    await createComment({data, postId: postId})
+    try {
+      await createComment({data, postId})
+      console.log(data)
+      getCommentAPI()
+    } catch (error) {
+      alert(error)
+    }
   }
 
   const submitEdit = async (data) => {
@@ -40,10 +46,27 @@ export default function PostDetailPage({user}) {
     }
   }
 
-  const deleteButton = async (data) => {
+  const deleteButton = async () => {
     // Insert confirm delete here
     await deletePost({postId})
     history.push(`/`)
+  }
+
+  const submitEditComment = async (data) => {
+    try {
+      await updateComment(data.body, postId, data.commentId)
+      console.log(data)
+      getCommentAPI()
+    } catch (error) {
+      alert(error)
+    }
+  }
+
+  const deleteCommentButton = async (data) => {
+    const commentId = data.target.attributes[1].value
+    // Insert confirm delete here
+    await deleteComment({postId, commentId})
+    getCommentAPI()
   }
 
   return (
@@ -55,6 +78,8 @@ export default function PostDetailPage({user}) {
       submitComment={submitComment}
       submitEdit={submitEdit}
       deleteButton={deleteButton}
+      submitEditComment={submitEditComment}
+      deleteCommentButton={deleteCommentButton}
     />
   )
 }

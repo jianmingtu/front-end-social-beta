@@ -77,22 +77,45 @@ export async function deletePost({postId}) {
   }
 }
 
-export async function getComment({postId}) {
-  // don't think we got the comment database set up yet
-  // try {
-  //   const result = await axios.get(`/api/posts/${postId}/comments`, { headers: authHeader })
-  //   return result.data
-  // } catch (error) {
-  //   console.log(error)
-  // }
+export async function getComments({postId}) {
+  try {
+    const result = await axios.get(`${BASE_API}/posts/${postId}/comments`)
+    console.log(result)
+    return result.data.comments
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 export async function createComment({data, postId}) {
-  // try {
-  //   const result = await axios.post(`/api/posts/${postId}/comments`, {
-  //     ...data
-  //   }, { headers: authHeader })
-  // } catch (error) {
-  //   console.log(error)
-  // }
+  try {
+    const headers = await authHeader()
+    const result = await axios.post(`${BASE_API}/posts/${postId}/comments`, { content: data.content }
+      , { headers })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export async function updateComment(data, postId, commentId) {
+  try {
+    console.log(data)
+
+    //Send the JWT in the header of the axios requests from the client
+    const headers = await authHeader()
+    await axios.put(`${BASE_API}/posts/${postId}/comments/${commentId}`, { content: data.content } 
+      , { headers })
+
+  } catch (err) {
+    throw (err.message || JSON.stringify(err))
+  }
+}
+
+export async function deleteComment({postId, commentId}) {
+  try {
+    const headers = await authHeader()
+    await axios.delete(`${BASE_API}/posts/${postId}/comments/${commentId}`, { headers })
+  } catch (error) {
+    console.log(error)
+  }
 }

@@ -5,7 +5,7 @@ import CommentForm from './CommentForm'
 import OptionMenu from '../OptionMenu'
 import styles from './PostDetail.module.css'
 
-export default function PostDetail({post, comments, user, submitEdit, deleteButton, submitComment}) {
+export default function PostDetail({post, comments, user, submitEdit, deleteButton, submitComment, submitEditComment, deleteCommentButton}) {
   const [editing, setEditing] = useState(false)
 
   const editButton = (e) => {
@@ -77,8 +77,21 @@ export default function PostDetail({post, comments, user, submitEdit, deleteButt
               </span>
             </div>
             <span className={styles.commentContainer}>
-              <CommentForm /> {/* This form will handle comment to the post */}
-              <UserComment />
+              {!!user && <CommentForm submitComment={submitComment} />} {/* This form will handle comment to the post */}
+              {
+                comments.length > 0 ?
+                  comments.map(comment => (
+                    <UserComment 
+                      key={comment._id}
+                      comment={comment}
+                      user={user}
+                      submitEditComment={submitEditComment}
+                      deleteCommentButton={deleteCommentButton}
+                    />
+                  )).reverse()
+                :
+                  <p>No Comment</p>
+              }
             </span>
           </div>
         :
