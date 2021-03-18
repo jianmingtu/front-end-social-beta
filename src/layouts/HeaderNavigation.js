@@ -24,9 +24,9 @@ export default function HeaderNavigation({user, setUserFunc}) {
 
   return (
     <PageHeader 
-      user = {user}
-      toProfile = {toProfile}
-      signOut = {onSignOut}
+      user={user}
+      toProfile={toProfile}
+      signOut={onSignOut}
     />
   )
 }

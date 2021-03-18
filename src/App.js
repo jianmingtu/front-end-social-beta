@@ -30,14 +30,15 @@ export default function App() {
 
   return (
     <Router>
+      {console.log(user)}
       <HeaderNavigation user={user} setUserFunc={setUserFunc} />
       <main className={styles.main}>
         <Switch>
           <Route path="/login">
             <LoginPage setUserFunc={setUserFunc} />
           </Route>
-          <Route path="/user/:userId?"> {/* Default link should redirect to current user's profile, maybe redirect to login if no current user */}
-            <UserProfilePage />
+          <Route path="/user/:userId?"> {/* Currently visiting other user is on hold */}
+            <UserProfilePage user={user} />
           </Route>
           <Route path="/post/:postId">
             <PostDetailPage user={user} />
