@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 
 import OptionMenu from '../OptionMenu'
 import styles from './Post.module.css'
 
-export default function Post({post, user, likePost, toDetail, submitEdit, deleteButton}) {
+export default function Post({post, user, likePost, submitEdit, deleteButton}) {
   const [editing, setEditing] = useState(false)
+
+  const history = useHistory()
 
   const editButton = (e) => {
     setEditing(true)
@@ -18,6 +21,10 @@ export default function Post({post, user, likePost, toDetail, submitEdit, delete
     e.preventDefault()
     submitEdit({body: {content: e.target.content.value}, postId: post._id})
     setEditing(false)
+  }
+
+  const toDetail = (data) => {
+    history.push(`/post/${post._id}`)
   }
 
   return (
@@ -49,7 +56,14 @@ export default function Post({post, user, likePost, toDetail, submitEdit, delete
           :
             <p>{post.content}</p>
         }
-        <img className={styles.postImage} src={post.imageUrl} />
+        {
+          post.imageUrl ?
+            <button className={styles.postImageButton} onClick={toDetail}>
+              <img className={styles.postImage} src={post.imageUrl} />
+            </button>
+          :
+            <span></span>
+        }
       </span>
       <span className={styles.likeComment}>
         <span className={styles.buttonCounter}>

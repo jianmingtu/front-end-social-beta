@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
 
 import Post from '../components/PostPage/Post'
 import NewPostForm from '../components/PostPage/NewPostForm'
@@ -9,8 +8,6 @@ import styles from './Layout.module.css'
 export default function PostPage({user}) {
   const [posts, setPosts] = useState([])
   const [newPostError, setNewPostError] = useState("")
-
-  const history = useHistory()
 
   useEffect(() => {
     getAPI()
@@ -33,11 +30,6 @@ export default function PostPage({user}) {
 
   const likePost = async () => {
 
-  }
-
-  const toDetail = (data) => {
-    const postId = data.target.attributes[0].value
-    history.push(`/post/${postId}`)
   }
 
   const submitEdit = async (data) => {
@@ -68,7 +60,6 @@ export default function PostPage({user}) {
               post={post}
               user={user}
               likePost={likePost}
-              toDetail={toDetail}
               submitEdit={submitEdit}
               deleteButton={deleteButton}
             />
