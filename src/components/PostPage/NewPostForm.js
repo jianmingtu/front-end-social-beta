@@ -24,7 +24,6 @@ export default function NewPostForm({submitPost, newPostError}) {
         <textarea className={styles.formText} name="content" placeholder="What's happening?" />
         <span className={styles.formButton}>
           <button type="button" onClick={handleImage}>Image</button>
-          <button type="button">Icon</button>
           <button type="submit">Post</button>
         </span>
         { 

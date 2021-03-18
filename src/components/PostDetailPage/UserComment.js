@@ -26,7 +26,7 @@ export default function UserComment({comment, user, submitEditComment, deleteCom
         <img className={styles.avatar} src="https://cdn.discordapp.com/attachments/738356484462608424/816066240917405716/unknown.png" />
         <div className={styles.commentBlock}>
           <span className={styles.commentUser}>
-            <p>User</p>
+            <p>{comment.user.username}</p>
             {
               !!user ?
                 comment.user.id == user.sub ?

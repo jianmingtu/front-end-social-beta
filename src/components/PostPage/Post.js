@@ -32,7 +32,7 @@ export default function Post({post, user, likePost, submitEdit, deleteButton}) {
       <span className={styles.postUser}>
         <span className={styles.user}>
           <img className={styles.avatar} src="https://cdn.discordapp.com/attachments/738356484462608424/816066240917405716/unknown.png" />
-          <p>Seal</p>
+          <p>{post.user.username}</p>
         </span>
         {
           !!user ?
