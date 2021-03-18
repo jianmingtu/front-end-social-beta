@@ -16,7 +16,7 @@ export default function PageHeader({user, toProfile, signOut}) {
       {
         !!user ?
           <span className={styles.rightContainer}>
-            <p>{user.email}</p>
+            <p>{user["cognito:username"]}</p>
             <FadeMenu toProfile = {toProfile} signOut = {signOut} />
           </span>        
         :
