@@ -4,7 +4,7 @@ import {useHistory} from 'react-router-dom'
 import styles from './PageHeader.module.css'
 import FadeMenu from './FadeMenu'
 
-export default function PageHeader({user, signOut}) {
+export default function PageHeader({user, toProfile, signOut}) {
 
   const history = useHistory();
 
@@ -14,8 +14,8 @@ export default function PageHeader({user, signOut}) {
       {
         !!user ?
           <span className={styles.rightContainer}>
-            <p>Profile</p>
-            <FadeMenu signOut = {signOut} />
+            <p>{user.email}</p>
+            <FadeMenu toProfile = {toProfile} signOut = {signOut} />
           </span>        
         :
           <span className={styles.rightContainer}>

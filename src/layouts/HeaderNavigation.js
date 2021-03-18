@@ -8,15 +8,25 @@ export default function HeaderNavigation({user, setUserFunc}) {
   
   const history = useHistory()
   
+  const toProfile = () => {
+    if (user) {
+      history.push(`/user/${user.sub}`)
+    } else {
+      history.push("/login")
+    }
+  }
+
   const onSignOut = () => {
      console.log("Sign out")
      setUserFunc(null)
      history.push("/")
-   }
+  }
+
   return (
     <PageHeader 
       user = {user}
-      signOut={onSignOut}
+      toProfile = {toProfile}
+      signOut = {onSignOut}
     />
   )
 }
