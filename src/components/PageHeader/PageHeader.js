@@ -10,7 +10,9 @@ export default function PageHeader({user, toProfile, signOut}) {
 
   return (
     <div className={styles.container}>
-      <p>Logo Here</p>
+      <button className={styles.logoButton} onClick={() => history.push("/")}>
+        <p>Logo Here</p>
+      </button>
       {
         !!user ?
           <span className={styles.rightContainer}>
@@ -19,7 +21,7 @@ export default function PageHeader({user, toProfile, signOut}) {
           </span>        
         :
           <span className={styles.rightContainer}>
-            <button onClick = { () => history.push("/login")}>Login</button>
+            <button onClick = {() => history.push("/login")}>Login</button>
           </span>
       }
     </div>
