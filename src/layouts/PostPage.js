@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import Post from '../components/PostPage/Post'
 import NewPostForm from '../components/PostPage/NewPostForm'
-import { getPosts, createPost, updatePost, deletePost } from '../network/network'
+import { getPosts, getComments, createPost, updatePost, deletePost } from '../network/network'
 import styles from './Layout.module.css'
 
 export default function PostPage({user}) {
@@ -26,6 +26,10 @@ export default function PostPage({user}) {
     } catch (error) {
       setNewPostError(error)
     }
+  }
+
+  const likePost = async () => {
+
   }
 
   const submitEdit = async (data) => {
@@ -55,10 +59,11 @@ export default function PostPage({user}) {
               key={post._id}
               post={post}
               user={user}
+              likePost={likePost}
               submitEdit={submitEdit}
               deleteButton={deleteButton}
             />
-          )).reverse()
+          ))
         :
           <p>No Post</p>
       }

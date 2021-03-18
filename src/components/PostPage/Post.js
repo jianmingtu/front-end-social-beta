@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 
 import OptionMenu from '../OptionMenu'
 import styles from './Post.module.css'
 
-export default function Post({post, user, submitEdit, deleteButton}) {
+export default function Post({post, user, likePost, submitEdit, deleteButton}) {
   const [editing, setEditing] = useState(false)
+
+  const history = useHistory()
 
   const editButton = (e) => {
     setEditing(true)
@@ -20,12 +23,16 @@ export default function Post({post, user, submitEdit, deleteButton}) {
     setEditing(false)
   }
 
+  const toDetail = (data) => {
+    history.push(`/post/${post._id}`)
+  }
+
   return (
     <div className={styles.postContainer}>
       <span className={styles.postUser}>
         <span className={styles.user}>
           <img className={styles.avatar} src="https://cdn.discordapp.com/attachments/738356484462608424/816066240917405716/unknown.png" />
-          <p>Seal</p>
+          <p>{post.user.username}</p>
         </span>
         {
           !!user ?
@@ -49,16 +56,23 @@ export default function Post({post, user, submitEdit, deleteButton}) {
           :
             <p>{post.content}</p>
         }
-        <img className={styles.postImage} src={post.imageUrl} />
+        {
+          post.imageUrl ?
+            <button className={styles.postImageButton} onClick={toDetail}>
+              <img className={styles.postImage} src={post.imageUrl} />
+            </button>
+          :
+            <span></span>
+        }
       </span>
       <span className={styles.likeComment}>
         <span className={styles.buttonCounter}>
-          <button>Icon</button>
+          <button onClick={likePost}>Like</button>
           <p>0</p>
         </span>
         <span className={styles.buttonCounter}>
-          <button>Icon</button>
-          <p>1</p>
+          <button onClick={toDetail} name={post._id}>Comment</button>
+          <p>{post.totalComments}</p>
         </span>
       </span>
     </div>

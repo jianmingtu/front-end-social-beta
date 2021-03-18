@@ -4,6 +4,11 @@
   margin: 1rem;
 }
 
+.logoButton {
+  border: none;
+  background-color: #FFFFFF;
+}
+
 .rightContainer {
   display: flex;
   align-items: center;

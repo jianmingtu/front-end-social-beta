@@ -26,7 +26,7 @@ export default function UserComment({comment, user, submitEditComment, deleteCom
         <img className={styles.avatar} src="https://cdn.discordapp.com/attachments/738356484462608424/816066240917405716/unknown.png" />
         <div className={styles.commentBlock}>
           <span className={styles.commentUser}>
-            <p>User</p>
+            <p>{comment.user.username}</p>
             {
               !!user ?
                 comment.user.id == user.sub ?
@@ -50,7 +50,7 @@ export default function UserComment({comment, user, submitEditComment, deleteCom
           }
         </div>
       </div>
-      <span className={styles.likeComment}>
+      {/* <span className={styles.likeComment}>
         <span className={styles.buttonCounter}>
           <button>Icon</button>
           <p>0</p>
@@ -59,7 +59,7 @@ export default function UserComment({comment, user, submitEditComment, deleteCom
           <button>Icon</button>
           <p>1</p>
         </span>
-      </span>
+      </span> */}
     </div>
     //If needed add CommentForm component here to for nested comments
     //Add UserComment component if there are any nested comments in data

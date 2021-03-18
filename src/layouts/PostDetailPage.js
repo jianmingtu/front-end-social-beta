@@ -26,16 +26,6 @@ export default function PostDetailPage({user}) {
     setComment(resultComments)
   }
 
-  const submitComment = async (data) => {
-    try {
-      await createComment({data, postId})
-      console.log(data)
-      getCommentAPI()
-    } catch (error) {
-      alert(error)
-    }
-  }
-
   const submitEdit = async (data) => {
     try {
       await updatePost(data, postId)
@@ -52,6 +42,17 @@ export default function PostDetailPage({user}) {
     history.push(`/`)
   }
 
+  const submitComment = async (data) => {
+    try {
+      await createComment({data, postId})
+      console.log(data)
+      getCommentAPI()
+      getPostAPI()
+    } catch (error) {
+      alert(error)
+    }
+  }
+
   const submitEditComment = async (data) => {
     try {
       await updateComment(data.body, postId, data.commentId)
@@ -65,8 +66,13 @@ export default function PostDetailPage({user}) {
   const deleteCommentButton = async (data) => {
     const commentId = data.target.attributes[1].value
     // Insert confirm delete here
-    await deleteComment({postId, commentId})
-    getCommentAPI()
+    try {
+      await deleteComment({postId, commentId})
+      getCommentAPI()
+      getPostAPI()
+    } catch (error) {
+      alert(error)
+    }
   }
 
   return (

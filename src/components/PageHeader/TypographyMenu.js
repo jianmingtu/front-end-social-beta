@@ -13,7 +13,7 @@ const useStyles = makeStyles({
   },
 })
 
-export default function TypographyMenu({signOut}) {
+export default function TypographyMenu({toProfile, signOut}) {
   const classes = useStyles();
 
   return (
@@ -23,7 +23,9 @@ export default function TypographyMenu({signOut}) {
           <ListItemIcon>
             {settingIcon}				
           </ListItemIcon>
-          <Typography variant="inherit">Profile</Typography>
+          <Typography variant="inherit" noWrap onClick={toProfile}>
+            Profile
+          </Typography>
         </MenuItem>
         <MenuItem>
           <ListItemIcon>
