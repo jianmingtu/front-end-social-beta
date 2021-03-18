@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom'
 
 import Post from '../components/PostPage/Post'
 import NewPostForm from '../components/PostPage/NewPostForm'
-import { getPosts, createPost, updatePost, deletePost } from '../network/network'
+import { getPosts, getComments, createPost, updatePost, deletePost } from '../network/network'
 import styles from './Layout.module.css'
 
 export default function PostPage({user}) {

@@ -72,7 +72,7 @@ export default function PostDetail({post, comments, user, submitEdit, deleteButt
                 </span>
                 <span className={styles.buttonCounter}>
                   <button>Icon</button>
-                  <p>1</p>
+                  <p>{comments.length}</p>
                 </span>
               </span>
             </div>
