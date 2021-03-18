@@ -5,7 +5,6 @@ import {signOut} from '../network/userAuth'
 
 
 export default function HeaderNavigation({user, setUserFunc}) {
-  
   const history = useHistory()
   
   const toProfile = () => {
