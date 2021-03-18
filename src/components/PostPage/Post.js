@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import OptionMenu from '../OptionMenu'
 import styles from './Post.module.css'
 
-export default function Post({post, user, submitEdit, deleteButton, handleShowPostDetail}) {
+export default function Post({post, user, submitEdit, deleteButton, handleShowPostDetail, handleLikeClicked}) {
   const [editing, setEditing] = useState(false)
 
   const editButton = (e) => {
@@ -51,10 +51,10 @@ export default function Post({post, user, submitEdit, deleteButton, handleShowPo
         }
         <img className={styles.postImage} src={post.imageUrl} />
       </span>
-      <span className={styles.likeComment}>
+      <span className={styles.likeComment} >
         <span className={styles.buttonCounter}>
-          <button>Icon</button>
-          <p>0</p>
+          <button onClick={() => handleLikeClicked(post._id)} >Icon</button>
+          <p>Like</p>
         </span>
         <span className={styles.buttonCounter}>
           <button>Icon</button>

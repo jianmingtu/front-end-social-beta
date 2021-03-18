@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react'
 
 import Post from '../components/PostPage/Post'
 import NewPostForm from '../components/PostPage/NewPostForm'
-import { getPosts, createPost, updatePost, deletePost } from '../network/network'
+import { getPosts, createPost, updatePost, deletePost, addLike, deleteLike } from '../network/network'
 import styles from './Layout.module.css'
 import {useHistory} from 'react-router-dom'
 
 export default function PostPage({user}) {
   const [posts, setPosts] = useState([])
   const [newPostError, setNewPostError] = useState("")
+  const [error, setError] = useState("")
 
   const history = useHistory()
 
@@ -52,6 +53,22 @@ export default function PostPage({user}) {
     history.push(`/post/${postId}`)
   }
 
+  const handleLikeClicked = async (postId) => {
+
+    try {
+        const post = posts.find( post => (post._id === postId)) 
+
+        if (post.liked) {
+          await deleteLike(postId)         
+        } else {
+          await addLike(postId)
+        }
+      } catch (error) {
+        setError(error)
+    }
+
+  }
+
 
   return (
     <div className={styles.container}>
@@ -66,6 +83,8 @@ export default function PostPage({user}) {
               submitEdit={submitEdit}
               deleteButton={deleteButton}
               handleShowPostDetail = {handleShowPostDetail}
+              handleLikeClicked = {handleLikeClicked}
+              error = {error}
             />
           )).reverse()
         :
