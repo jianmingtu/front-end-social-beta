@@ -4,10 +4,13 @@ import Post from '../components/PostPage/Post'
 import NewPostForm from '../components/PostPage/NewPostForm'
 import { getPosts, createPost, updatePost, deletePost } from '../network/network'
 import styles from './Layout.module.css'
+import {useHistory} from 'react-router-dom'
 
 export default function PostPage({user}) {
   const [posts, setPosts] = useState([])
   const [newPostError, setNewPostError] = useState("")
+
+  const history = useHistory()
 
   useEffect(() => {
     getAPI()
@@ -45,6 +48,11 @@ export default function PostPage({user}) {
     getAPI()
   }
 
+   const handleShowPostDetail = postId => {
+    history.push(`/post/${postId}`)
+  }
+
+
   return (
     <div className={styles.container}>
       {!!user && <NewPostForm submitPost={submitPost} newPostError={newPostError} />}
@@ -57,6 +65,7 @@ export default function PostPage({user}) {
               user={user}
               submitEdit={submitEdit}
               deleteButton={deleteButton}
+              handleShowPostDetail = {handleShowPostDetail}
             />
           )).reverse()
         :

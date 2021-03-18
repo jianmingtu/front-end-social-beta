@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import OptionMenu from '../OptionMenu'
 import styles from './Post.module.css'
 
-export default function Post({post, user, submitEdit, deleteButton}) {
+export default function Post({post, user, submitEdit, deleteButton, handleShowPostDetail}) {
   const [editing, setEditing] = useState(false)
 
   const editButton = (e) => {
@@ -21,7 +21,7 @@ export default function Post({post, user, submitEdit, deleteButton}) {
   }
 
   return (
-    <div className={styles.postContainer}>
+    <div className={styles.postContainer} onClick = {() => handleShowPostDetail(post._id)}>
       <span className={styles.postUser}>
         <span className={styles.user}>
           <img className={styles.avatar} src="https://cdn.discordapp.com/attachments/738356484462608424/816066240917405716/unknown.png" />
