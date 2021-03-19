@@ -5,7 +5,7 @@ import CommentForm from './CommentForm'
 import OptionMenu from '../OptionMenu'
 import styles from './PostDetail.module.css'
 
-export default function PostDetail({post, comments, user, submitEdit, deleteButton, submitComment, submitEditComment, deleteCommentButton}) {
+export default function PostDetail({post, comments, user, submitEdit, deleteButton, submitComment, submitEditComment, deleteCommentButton, likePost}) {
   const [editing, setEditing] = useState(false)
 
   const editButton = (e) => {
@@ -67,7 +67,7 @@ export default function PostDetail({post, comments, user, submitEdit, deleteButt
               </span>
               <span className={styles.likeComment}>
                 <span className={styles.buttonCounter}>
-                  <button>Icon</button>
+                  <button onClick={() => likePost(post._id)} >Like</button>
                   <p>0</p>
                 </span>
                 <span className={styles.buttonCounter}>

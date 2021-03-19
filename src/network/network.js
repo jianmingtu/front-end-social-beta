@@ -115,25 +115,27 @@ export async function deleteComment({postId, commentId}) {
   try {
     const headers = await authHeader()
     await axios.delete(`${BASE_API}/posts/${postId}/comments/${commentId}`, { headers })
+
   } catch (error) {
     console.log(error)
   }
 }
 
-export async function addLike({postId}) {
+export async function addLike(postId) {
   try {
+
     const headers = await authHeader()
-    const result = await axios.post(`${BASE_API}/posts/${postId}/likes`, { headers })
+    const result = await axios.post(`${BASE_API}/posts/${postId}/likes`, { content: {} } , { headers })
   } catch (error) {
     throw (error.message || JSON.stringify(error))
   }
 }
 
 
-export async function deleteLike({postId}) {
+export async function deleteLike(postId) {
   try {
     const headers = await authHeader()
-    await axios.delete(`${BASE_API}/posts/${postId}/likes/`, { headers })
+    await axios.delete(`${BASE_API}/posts/${postId}/likes`, { headers })
   } catch (error) {
     throw (error.message || JSON.stringify(error))
   }

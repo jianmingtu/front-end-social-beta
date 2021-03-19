@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { useParams, useHistory } from 'react-router-dom'
 
 import PostDetail from '../components/PostDetailPage/PostDetail'
-import { getPost, updatePost, deletePost, getComments, createComment, updateComment, deleteComment } from '../network/network'
+import { getPost, updatePost, deletePost, getComments, createComment, updateComment, deleteComment, addLike, deleteLike } from '../network/network'
 
 export default function PostDetailPage({user}) {
   const [post, setPost] = useState()
   const [comments, setComment] = useState([])
+   const [error, setError] = useState("")
 
   let { postId } = useParams()
   const history = useHistory()
@@ -75,6 +76,26 @@ export default function PostDetailPage({user}) {
     }
   }
 
+  const likePost = async (postId) => {
+
+    try {
+      let newPost = null 
+      if (post.liked) {
+        await deleteLike(postId) 
+        newPost = { ...post, totalLikes: post.totalLikes-1, liked: false }        
+      } 
+      else 
+      {
+        await addLike(postId)
+        newPost = { ...post, totalLikes: post.totalLikes+1, liked: true }      
+      }
+      setPost(newPost)
+
+    } catch (error) {
+      setError(error)
+    }
+  }
+
   return (
     //pass in comment list here for it to be rendered
     <PostDetail 
@@ -86,6 +107,7 @@ export default function PostDetailPage({user}) {
       deleteButton={deleteButton}
       submitEditComment={submitEditComment}
       deleteCommentButton={deleteCommentButton}
+      likePost = {likePost}
     />
   )
 }
