@@ -25,13 +25,9 @@ export default function PostPage({user}) {
     const newPosts = posts.map(post => {
       // if the current user is in the post's likes, set liked flag to be true
       if(user) {
+        // if the current user voted Like on this post, the Like Icon shows in color and its value is set to be true
         const liked = post.likeUserIds.find(
-          likeUserId => {
-
-            console.log("likeUserId", likeUserId)
-            console.log("user.sub", decodedToken.sub)
-              return likeUserId === decodedToken.sub
-            }
+          likeUserId => {return likeUserId === decodedToken.sub}
           )
           if (liked) { 
             return { ...post,  liked: true }
