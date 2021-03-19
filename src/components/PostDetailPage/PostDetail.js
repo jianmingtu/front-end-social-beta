@@ -4,6 +4,9 @@ import UserComment from './UserComment'
 import CommentForm from './CommentForm'
 import OptionMenu from '../OptionMenu'
 import styles from './PostDetail.module.css'
+import { IconButton, Typography } from '@material-ui/core'
+import ThumbUpAltRoundedIcon from '@material-ui/icons/ThumbUpAltRounded';
+import {PRIMARY_COLOR, BUTTON_COLOR, BKG_COLOR }  from '../../constant'
 
 export default function PostDetail({post, comments, user, submitEdit, deleteButton, submitComment, submitEditComment, deleteCommentButton, likePost}) {
   const [editing, setEditing] = useState(false)
@@ -67,8 +70,11 @@ export default function PostDetail({post, comments, user, submitEdit, deleteButt
               </span>
               <span className={styles.likeComment}>
                 <span className={styles.buttonCounter}>
-                  <button onClick={() => likePost(post._id)} >Like</button>
-                  <p>{post.totalLikes}</p>
+                  <IconButton fontSize="medium" onClick={() => likePost(post._id)} >
+                    {post.liked ? <ThumbUpAltRoundedIcon fontSize="medium" style={{ color: PRIMARY_COLOR }}  /> : <ThumbUpAltRoundedIcon fontSize="medium" style={{ color: BUTTON_COLOR }} /> }
+                  </IconButton>
+                  <Typography variant="body2" color="textPrimary" component="p">
+                    {post.totalLikes}</Typography>
                 </span>
                 <span className={styles.buttonCounter}>
                   <button>Icon</button>

@@ -3,6 +3,9 @@ import { useHistory } from 'react-router-dom'
 
 import OptionMenu from '../OptionMenu'
 import styles from './Post.module.css'
+import { IconButton, Typography } from '@material-ui/core'
+import ThumbUpAltRoundedIcon from '@material-ui/icons/ThumbUpAltRounded';
+import {PRIMARY_COLOR, BUTTON_COLOR, BKG_COLOR }  from '../../constant'
 
 export default function Post({post, user, likePost, submitEdit, deleteButton, error}) {
   const [editing, setEditing] = useState(false)
@@ -66,10 +69,13 @@ export default function Post({post, user, likePost, submitEdit, deleteButton, er
         }
       </span>
       <span className={styles.likeComment} >
-        <span className={styles.buttonCounter}>
-          <button onClick={() => likePost(post._id)} >Like</button>
-          <p>{post.totalLikes}</p>
-        </span>
+               <span className={styles.buttonCounter}>
+                  <IconButton fontSize="medium" onClick={() => likePost(post._id)} >
+                    {post.liked ? <ThumbUpAltRoundedIcon fontSize="medium" style={{ color: PRIMARY_COLOR }}  /> : <ThumbUpAltRoundedIcon fontSize="medium" style={{ color: BUTTON_COLOR }} /> }
+                  </IconButton>
+                  <Typography variant="body2" color="textPrimary" component="p">
+                    {post.totalLikes}</Typography>
+                </span>
         <span className={styles.buttonCounter}>
           <button onClick={toDetail} name={post._id}>Comment</button>
           <p>{post.totalComments}</p>
