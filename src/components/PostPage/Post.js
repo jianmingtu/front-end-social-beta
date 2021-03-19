@@ -68,7 +68,7 @@ export default function Post({post, user, likePost, submitEdit, deleteButton, er
       <span className={styles.likeComment} >
         <span className={styles.buttonCounter}>
           <button onClick={() => likePost(post._id)} >Like</button>
-          <p>0</p>
+          <p>{post.totalLikes}</p>
         </span>
         <span className={styles.buttonCounter}>
           <button onClick={toDetail} name={post._id}>Comment</button>
