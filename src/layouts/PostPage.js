@@ -14,31 +14,34 @@ export default function PostPage({user}) {
 
   const history = useHistory()
 
-  useEffect(() => {
+  useEffect( async () => {
     getAPI()
   }, [])
 
-  const getAPI = async () => {
-    // we have to call currentDecodeUser() here because the user being passed to this function PostPage() is undefined at this moment
-    const decodedToken = await currentDecodeUser();
-    const posts = await getPosts()
-    const newPosts = posts.map(post => {
-      // if the current user is in the post's likes, set liked flag to be true
-      if(user) {
-        // if the current user voted Like on this post, the Like Icon shows in color and its value is set to be true
-        const liked = post.likeUserIds.find(
-          likeUserId => {return likeUserId === decodedToken.sub}
-          )
-          if (liked) { 
-            return { ...post,  liked: true }
-          }
-          else {
-            return post
-          }
-        }
-    })
-    
+  useEffect(async () => {
+    const newPosts = await updatePostLikes(posts)
+    setPosts(newPosts)    
+  }, [user])  
 
+  const updatePostLikes = async (posts) => {
+
+    let newPosts = posts
+
+    const decodedToken = await currentDecodeUser();  
+    // if the current user is in the post's likes, set liked flag to be true
+    newPosts = posts.map(post => {
+      
+      // if the current user voted Like on this post, the Like Icon shows in color and its value is set to be true
+      const liked = post.likeUserIds.find( likeUserId => {return decodedToken ? likeUserId === decodedToken.sub : false})
+      return { ...post,  liked: liked ? true : false }
+    })
+
+    return newPosts
+  } 
+
+  const getAPI = async () => {
+    const posts = await getPosts()
+    const newPosts = await updatePostLikes(posts)
     setPosts(newPosts)
   }
 
@@ -72,6 +75,9 @@ export default function PostPage({user}) {
   const likePost = async (postId) => {
 
     try {
+
+        if(!user)  throw new Error("no user logged in.")
+
         // To avoid Await in a For-Loop, we choose promise all
         const promises = posts.map(post => {
             if( post._id === postId) {
@@ -93,7 +99,7 @@ export default function PostPage({user}) {
         setPosts(newPosts)
 
       } catch (error) {
-        setError(error)
+        setError(error.message)
     }
 
   }
