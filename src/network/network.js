@@ -18,12 +18,12 @@ async function authHeader() {
 
 export async function getPosts() {
   try {
+
     const result = await axios.get(`${BASE_API}/posts`)
     console.log(result)
     return result.data.posts
   } catch (error) {
     console.log(error)
-    alert(error.message)
   }
 }
 

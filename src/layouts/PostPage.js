@@ -5,6 +5,7 @@ import NewPostForm from '../components/PostPage/NewPostForm'
 import { getPosts, getComments, createPost, updatePost, deletePost, addLike, deleteLike } from '../network/network'
 import styles from './Layout.module.css'
 import {useHistory} from 'react-router-dom'
+import {currentDecodeUser} from '../network/userAuth'
 
 export default function PostPage({user}) {
   const [posts, setPosts] = useState([])
@@ -18,8 +19,31 @@ export default function PostPage({user}) {
   }, [])
 
   const getAPI = async () => {
-    const result = await getPosts()
-    setPosts(result)
+    // we have to call currentDecodeUser() here because the user being passed to this function PostPage() is undefined at this moment
+    const decodedToken = await currentDecodeUser();
+    const posts = await getPosts()
+    const newPosts = posts.map(post => {
+      // if the current user is in the post's likes, set liked flag to be true
+      if(user) {
+        const liked = post.likeUserIds.find(
+          likeUserId => {
+
+            console.log("likeUserId", likeUserId)
+            console.log("user.sub", decodedToken.sub)
+              return likeUserId === decodedToken.sub
+            }
+          )
+          if (liked) { 
+            return { ...post,  liked: true }
+          }
+          else {
+            return post
+          }
+        }
+    })
+    
+
+    setPosts(newPosts)
   }
 
   const submitPost = async (data) => {
@@ -38,7 +62,7 @@ export default function PostPage({user}) {
       console.log(data)
       getAPI()
     } catch (error) {
-      alert(error)
+      setError(error)
     }
   }
 
@@ -84,7 +108,7 @@ export default function PostPage({user}) {
     <p>{error}</p>
       {!!user && <NewPostForm submitPost={submitPost} newPostError={newPostError} />}
       {
-        posts.length > 0 ?
+        (posts && posts.length) > 0 ?
           posts.map(post => (
             <Post 
               key={post._id}
