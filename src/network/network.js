@@ -121,7 +121,7 @@ export async function deleteComment({postId, commentId}) {
   }
 }
 
-export async function addLike(postId) {
+export async function addLike({postId}) {
   try {
 
     const headers = await authHeader()
@@ -132,9 +132,10 @@ export async function addLike(postId) {
 }
 
 
-export async function deleteLike(postId) {
+export async function deleteLike({postId}) {
   try {
     const headers = await authHeader()
+    console.log(`${BASE_API}/posts/${postId}/likes`)
     await axios.delete(`${BASE_API}/posts/${postId}/likes`, { headers })
   } catch (error) {
     throw (error.message || JSON.stringify(error))

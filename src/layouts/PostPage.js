@@ -49,24 +49,29 @@ export default function PostPage({user}) {
     getAPI()
   }
 
-  const likePost = async (postId}) => {
+  const likePost = async (postId) => {
 
     try {
-        const newpost = posts.find( post => (post._id === postId)) 
+        // To avoid Await in a For-Loop, we choose promise all
+        const promises = posts.map(post => {
+            if( post._id === postId) {
+               if (post.liked) { 
+                   deleteLike({postId: postId})
+                  return { ...post, totalLikes: post.totalLikes-1, liked: false }
+               } else {
+                   addLike({postId: postId})
+                  return { ...post, totalLikes: post.totalLikes+1, liked: true }
+               }
+            }
+            else{
+              return post
+            }
+        })
 
-        if (post.liked) {
-          await deleteLike({postId})  
-          
-          setPosts
-          posts.map(post=>{
-              newpost
+        const newPosts = await Promise.all(promises)
 
-              oldpost
+        setPosts(newPosts)
 
-          })
-        } else {
-          await addLike(postId)
-        }
       } catch (error) {
         setError(error)
     }
@@ -76,6 +81,7 @@ export default function PostPage({user}) {
 
   return (
     <div className={styles.container}>
+    <p>{error}</p>
       {!!user && <NewPostForm submitPost={submitPost} newPostError={newPostError} />}
       {
         posts.length > 0 ?

@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom'
 import OptionMenu from '../OptionMenu'
 import styles from './Post.module.css'
 
-export default function Post({post, user, likePost, submitEdit, deleteButton}) {
+export default function Post({post, user, likePost, submitEdit, deleteButton, error}) {
   const [editing, setEditing] = useState(false)
 
   const history = useHistory()

@@ -81,12 +81,12 @@ export default function PostDetailPage({user}) {
     try {
       let newPost = null 
       if (post.liked) {
-        await deleteLike(postId) 
+        await deleteLike({postId: postId}) 
         newPost = { ...post, totalLikes: post.totalLikes-1, liked: false }        
       } 
       else 
       {
-        await addLike(postId)
+        await addLike({postId: postId})
         newPost = { ...post, totalLikes: post.totalLikes+1, liked: true }      
       }
       setPost(newPost)
