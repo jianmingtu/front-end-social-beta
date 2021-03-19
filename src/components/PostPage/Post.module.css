@@ -59,6 +59,11 @@
   border-top: 1px solid #000000;
 }
 
+.postImageButton {
+  border: none;
+  background-color: #FFFFFF;
+}
+
 .postImage {
   max-width: 100%;
 }

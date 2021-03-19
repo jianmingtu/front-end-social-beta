@@ -5,9 +5,9 @@ import {CONS_EMAIL, CONS_PASSWORD,CONS_USERNAME, CONS_PHOTO }  from '../constant
 import { signUp, loginUser, currentDecodeUser } from '../network/userAuth'
 
 export default function PostPage({setUserFunc}) {
+  const [error, setError] = useState("")  
 
   const history = useHistory()
-  const [error, setError] = useState("")  
 
   const authFunc = async (e) => {
       try {

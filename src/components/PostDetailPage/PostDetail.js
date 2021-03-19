@@ -40,7 +40,7 @@ export default function PostDetail({post, comments, user, submitEdit, deleteButt
               <span className={styles.postUser}>
                 <span className={styles.user}>
                   <img className={styles.avatar} src="https://cdn.discordapp.com/attachments/738356484462608424/816066240917405716/unknown.png" />
-                  <p>Seal</p>
+                  <p>{post.user.username}</p>
                 </span>
                 {
                   !!user ?
@@ -72,7 +72,7 @@ export default function PostDetail({post, comments, user, submitEdit, deleteButt
                 </span>
                 <span className={styles.buttonCounter}>
                   <button>Icon</button>
-                  <p>1</p>
+                  <p>{post.totalComments}</p>
                 </span>
               </span>
             </div>

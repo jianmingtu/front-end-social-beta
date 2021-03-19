@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import Post from '../components/PostPage/Post'
 import NewPostForm from '../components/PostPage/NewPostForm'
-import { getPosts, createPost, updatePost, deletePost, addLike, deleteLike } from '../network/network'
+import { getPosts, getComments, createPost, updatePost, deletePost, addLike, deleteLike } from '../network/network'
 import styles from './Layout.module.css'
 import {useHistory} from 'react-router-dom'
 
@@ -49,17 +49,21 @@ export default function PostPage({user}) {
     getAPI()
   }
 
-   const handleShowPostDetail = postId => {
-    history.push(`/post/${postId}`)
-  }
-
-  const handleLikeClicked = async (postId) => {
+  const likePost = async (postId}) => {
 
     try {
-        const post = posts.find( post => (post._id === postId)) 
+        const newpost = posts.find( post => (post._id === postId)) 
 
         if (post.liked) {
-          await deleteLike(postId)         
+          await deleteLike({postId})  
+          
+          setPosts
+          posts.map(post=>{
+              newpost
+
+              oldpost
+
+          })
         } else {
           await addLike(postId)
         }
@@ -80,13 +84,12 @@ export default function PostPage({user}) {
               key={post._id}
               post={post}
               user={user}
+              likePost={likePost}
               submitEdit={submitEdit}
               deleteButton={deleteButton}
-              handleShowPostDetail = {handleShowPostDetail}
-              handleLikeClicked = {handleLikeClicked}
               error = {error}
             />
-          )).reverse()
+          ))
         :
           <p>No Post</p>
       }

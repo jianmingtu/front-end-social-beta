@@ -5,17 +5,26 @@ import {signOut} from '../network/userAuth'
 
 
 export default function HeaderNavigation({user, setUserFunc}) {
-  
   const history = useHistory()
   
+  const toProfile = () => {
+    if (user) {
+      history.push(`/user/${user.sub}`)
+    } else {
+      history.push("/login")
+    }
+  }
+
   const onSignOut = () => {
      console.log("Sign out")
      setUserFunc(null)
      history.push("/")
-   }
+  }
+
   return (
     <PageHeader 
-      user = {user}
+      user={user}
+      toProfile={toProfile}
       signOut={onSignOut}
     />
   )
