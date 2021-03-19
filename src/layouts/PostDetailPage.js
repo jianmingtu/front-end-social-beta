@@ -2,23 +2,31 @@ import React, { useEffect, useState } from 'react'
 import { useParams, useHistory } from 'react-router-dom'
 
 import PostDetail from '../components/PostDetailPage/PostDetail'
-import { getPost, updatePost, deletePost, getComments, createComment, updateComment, deleteComment } from '../network/network'
+import { getPost, updatePost, deletePost, getComments, createComment, updateComment, deleteComment, addLike, deleteLike } from '../network/network'
+import {currentDecodeUser} from '../network/userAuth'
 
 export default function PostDetailPage({user}) {
   const [post, setPost] = useState()
   const [comments, setComment] = useState([])
+   const [error, setError] = useState("")
 
   let { postId } = useParams()
   const history = useHistory()
 
-  useEffect(() => {
+  useEffect(async () => {
     getPostAPI()
     getCommentAPI()
   }, [])
 
+  useEffect(async () => {
+    const newPost = await updatePostLikes(post)
+    setPost(newPost)    
+  }, [user])  
+
   const getPostAPI = async () => {
     const resultPost = await getPost({postId})
-    setPost(resultPost)
+    const newPost = await updatePostLikes(resultPost)
+    setPost(newPost)
   }
 
   const getCommentAPI = async () => {
@@ -75,6 +83,45 @@ export default function PostDetailPage({user}) {
     }
   }
 
+  const likePost = async (postId) => {
+
+    try {
+
+      if(!user)  throw new Error("no user logged in.")
+
+      let newPost = null 
+      if (post.liked) {
+        await deleteLike({postId: postId}) 
+        newPost = { ...post, totalLikes: post.totalLikes-1, liked: false }        
+      } 
+      else 
+      {
+        await addLike({postId: postId})
+        newPost = { ...post, totalLikes: post.totalLikes+1, liked: true }      
+      }
+      setPost(newPost)
+
+    } catch (error) {
+      setError(error)
+    }
+  }
+
+
+   const updatePostLikes = async (post) => {
+
+    let newPost = post
+
+    if(post) {
+      const decodedToken = await currentDecodeUser();  
+      // if the current user is in the post's likes, set liked flag to be true
+        // if the current user voted Like on this post, the Like Icon shows in color and its value is set to be true
+        const liked = post.likeUserIds.find( likeUserId => {return decodedToken ? likeUserId === decodedToken.sub : false})
+        newPost = { ...post,  liked: liked ? true : false }
+    }
+
+    return newPost
+  } 
+
   return (
     //pass in comment list here for it to be rendered
     <PostDetail 
@@ -86,6 +133,7 @@ export default function PostDetailPage({user}) {
       deleteButton={deleteButton}
       submitEditComment={submitEditComment}
       deleteCommentButton={deleteCommentButton}
+      likePost = {likePost}
     />
   )
 }

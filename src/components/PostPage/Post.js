@@ -3,8 +3,11 @@ import { useHistory } from 'react-router-dom'
 
 import OptionMenu from '../OptionMenu'
 import styles from './Post.module.css'
+import { IconButton, Typography } from '@material-ui/core'
+import ThumbUpAltRoundedIcon from '@material-ui/icons/ThumbUpAltRounded';
+import {PRIMARY_COLOR, BUTTON_COLOR, BKG_COLOR }  from '../../constant'
 
-export default function Post({post, user, likePost, submitEdit, deleteButton}) {
+export default function Post({post, user, likePost, submitEdit, deleteButton, error}) {
   const [editing, setEditing] = useState(false)
 
   const history = useHistory()
@@ -28,7 +31,7 @@ export default function Post({post, user, likePost, submitEdit, deleteButton}) {
   }
 
   return (
-    <div className={styles.postContainer}>
+    <div className={styles.postContainer} >
       <span className={styles.postUser}>
         <span className={styles.user}>
           <img className={styles.avatar} src="https://cdn.discordapp.com/attachments/738356484462608424/816066240917405716/unknown.png" />
@@ -65,11 +68,14 @@ export default function Post({post, user, likePost, submitEdit, deleteButton}) {
             <span></span>
         }
       </span>
-      <span className={styles.likeComment}>
-        <span className={styles.buttonCounter}>
-          <button onClick={likePost}>Like</button>
-          <p>0</p>
-        </span>
+      <span className={styles.likeComment} >
+               <span className={styles.buttonCounter}>
+                  <IconButton fontSize="medium" onClick={() => likePost(post._id)} >
+                    {post.liked ? <ThumbUpAltRoundedIcon fontSize="medium" style={{ color: PRIMARY_COLOR }}  /> : <ThumbUpAltRoundedIcon fontSize="medium" style={{ color: BUTTON_COLOR }} /> }
+                  </IconButton>
+                  <Typography variant="body2" color="textPrimary" component="p">
+                    {post.totalLikes}</Typography>
+                </span>
         <span className={styles.buttonCounter}>
           <button onClick={toDetail} name={post._id}>Comment</button>
           <p>{post.totalComments}</p>
