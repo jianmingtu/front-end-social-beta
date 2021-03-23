@@ -2,16 +2,35 @@ import React, { useEffect, useState } from 'react'
 import {useHistory} from 'react-router-dom'
 import PageHeader from '../components/PageHeader/PageHeader'
 import {signOut} from '../network/userAuth'
+import * as network from '../network/network'
 
 
 export default function HeaderNavigation({user, setUserFunc}) {
   const history = useHistory()
+
+   const [error, setError] = useState()
   
-  const toProfile = () => {
-    if (user) {
-      history.push(`/user/${user.sub}`)
-    } else {
-      history.push("/login")
+  const toProfile = async (data) => {
+
+    try {
+      await network.saveProFile(data)
+    } catch (error) {
+      setError(error.message)
+    }
+  }
+
+   const getProfile = async () => {
+
+    try {
+      // request the current user
+      if(!!user) {
+        const result = await network.getProfile(user)
+        if(result && result.data && result.data.user) {
+          setUserFunc({...user, avatar: result.data.user.avatar, description: result.data.user.description})
+        }
+      }
+    } catch (error) {
+      setError(error.message)
     }
   }
 
@@ -26,6 +45,8 @@ export default function HeaderNavigation({user, setUserFunc}) {
       user={user}
       toProfile={toProfile}
       signOut={onSignOut}
+      error = {error}
+      getProfile={getProfile}
     />
   )
 }

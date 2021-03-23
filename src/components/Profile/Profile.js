@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextField, Card, Tabs, Close, Tab, CardContent, CardHeader, Button, IconButton, Typography, CardMedia } from '@material-ui/core'
-import { PhotoCamera } from '@material-ui/icons'
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import { makeStyles } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 import Avatar from '@material-ui/core/Avatar';
@@ -59,7 +59,8 @@ const useStyles = makeStyles((theme) => ({
         maxWidth: 200,
         maxHeight: 300,
         margin: 0,
-        position: "relative"
+        position: "relative",
+        boxShadow: 'none'
     },
     imagePreviewHeader: {
         position: "absolute",
@@ -79,27 +80,39 @@ const useStyles = makeStyles((theme) => ({
         padding: "4px 20px",
         color: "white",
         fontSize: "1.2rem"
-    }
+    },
+
 }));
 
 
 
 
 
-export default function Profile( {open, handleClose, error }) {
+export default function Profile( {open, user, handleClose, toProfile, getProfile, error }) {
  const classes = useStyles();
   const [filePreview, setFilePreview] = useState();
   const [file, setFile] = useState();
-   const [imageUrl, setImageUrl] = useState("")
   const [description, setDescription] = useState("")
+
+
+  useEffect( async () => {
+    if(open) {
+     getProfile()
+    }
+  }, [open])
+
+  useEffect( async () => {
+    if(user) {
+        if(user.avatar) setFilePreview(user.avatar)
+        if(user.description) setDescription(user.description)
+    }
+  }, [user])
+
 
    const submit = event => {
     event.preventDefault()
-    // if (tabValue === 0) {
-    //   onSubmit({type: "url", imageUrl, description})
-    // } else {
-    //   onSubmit({type: "file", file, description})
-    // }
+    toProfile({file, description})
+ 
   }
 
     const deleteImage = image => {
@@ -139,11 +152,11 @@ export default function Profile( {open, handleClose, error }) {
             <label htmlFor="icon-button-file" className="uploadIcon">
                 <Typography>Upload Photo</Typography>
                 <IconButton style={{color : PRIMARY_COLOR}}  aria-label="upload picture" component="span" >
-                <PhotoCamera fontSize="large" />
+                <CloudUploadIcon fontSize="large" />
                 </IconButton>
             </label>
        
-            <Card className={classes.imagePreview}>
+            <Card className={classes.imagePreview} >
                 <CardHeader className={classes.imagePreviewHeader}
                     action={
                     <IconButton aria-label="close" onClick={deleteImage}  size="large">
@@ -154,6 +167,7 @@ export default function Profile( {open, handleClose, error }) {
                 <CardMedia
                     component="img"
                     image={filePreview}
+                     
                 />
             </Card>
          </div>

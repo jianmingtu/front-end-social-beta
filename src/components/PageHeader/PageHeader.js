@@ -4,7 +4,7 @@ import {useHistory} from 'react-router-dom'
 import styles from './PageHeader.module.css'
 import FadeMenu from './FadeMenu'
 
-export default function PageHeader({user, toProfile, signOut}) {
+export default function PageHeader({user, toProfile, getProfile, signOut, error}) {
 
   const history = useHistory();
 
@@ -17,7 +17,7 @@ export default function PageHeader({user, toProfile, signOut}) {
         !!user ?
           <span className={styles.rightContainer}>
             <p>{user["cognito:username"]}</p>
-            <FadeMenu toProfile = {toProfile} signOut = {signOut} />
+            <FadeMenu user = {user} toProfile = {toProfile} getProfile={getProfile} signOut = {signOut} error={error} />
           </span>        
         :
           <span className={styles.rightContainer}>

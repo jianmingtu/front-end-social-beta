@@ -14,7 +14,7 @@ const useStyles = makeStyles({
   },
 })
 
-export default function TypographyMenu({toProfile, signOut}) {
+export default function TypographyMenu({user, toProfile, getProfile, signOut, error}) {
 
  const classes = useStyles();
   const [open, setOpen] = React.useState(false);
@@ -38,7 +38,7 @@ export default function TypographyMenu({toProfile, signOut}) {
           <Typography variant="inherit" noWrap onClick={handleClickOpen}>
             Profile
           </Typography>
-          <Profile fullScreen open={open} handleClose={handleClose} />
+          <Profile fullScreen open={open} user = {user} toProfile={toProfile} getProfile={getProfile} handleClose={handleClose} error={error} />
         </MenuItem>
         <MenuItem>
           <ListItemIcon>

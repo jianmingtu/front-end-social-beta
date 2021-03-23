@@ -4,7 +4,7 @@ import Menu from '@material-ui/core/Menu'
 import Fade from '@material-ui/core/Fade'
 import TypographyMenu from './TypographyMenu'
 
-export default function FadeMenu({toProfile, signOut}) {
+export default function FadeMenu({user, toProfile, getProfile, signOut, error}) {
   const [anchorEl, setAnchorEl] = React.useState(null)
   const open = Boolean(anchorEl)
 
@@ -38,7 +38,7 @@ export default function FadeMenu({toProfile, signOut}) {
           horizontal: "center"
         }}
       >
-        <TypographyMenu toProfile = {toProfile} signOut = {signOut} />
+        <TypographyMenu user = {user} toProfile = {toProfile} getProfile={getProfile} signOut = {signOut} error ={error} />
       </Menu>
     </div>
   )
