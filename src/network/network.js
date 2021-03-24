@@ -153,27 +153,25 @@ export async function getProfile(user) {
 
 }
 
-export async function saveProFile({file, description}) {
+export async function saveProfile({file, description}) {
   try {
+    const headers = await authHeader()
 
-      const headers = await authHeader()
-
-      // get secured url to upload image
-      let signedURLResult = await axios.get(`${BASE_API}/secureUrl`, { headers })
-      const { uploadURL, Key } = signedURLResult.data
+    // get secured url to upload image
+    let signedURLResult = await axios.get(`${BASE_API}/secureUrl`, { headers })
+    const { uploadURL, Key } = signedURLResult.data
 
 
-      // Upload image to s3
-      await axios.put(uploadURL, file)
-      const imageUrl = uploadURL.split('?')[0]
+    // Upload image to s3
+    await axios.put(uploadURL, file)
+    const imageUrl = uploadURL.split('?')[0]
 
-      // update users in database
-      await axios.put(`${BASE_API}/users`, { avatar: imageUrl, description: description } 
-      , { headers })
+    // update users in database
+    await axios.put(`${BASE_API}/users`, { avatar: imageUrl, description: description } 
+    , { headers })
   } catch (error) {
     throw (error.message || JSON.stringify(error))
   }
-
 }
 
 

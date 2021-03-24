@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import Post from '../components/PostPage/Post'
 import NewPostForm from '../components/PostPage/NewPostForm'
-import { getPosts, getComments, createPost, updatePost, deletePost, addLike, deleteLike } from '../network/network'
+import { getPosts, createPost, updatePost, deletePost, addLike, deleteLike } from '../network/network'
 import styles from './Layout.module.css'
 import {useHistory} from 'react-router-dom'
 import {currentDecodeUser} from '../network/userAuth'

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
 import UserComment from './UserComment'
 import CommentForm from './CommentForm'
@@ -6,7 +6,7 @@ import OptionMenu from '../OptionMenu'
 import styles from './PostDetail.module.css'
 import { IconButton, Typography } from '@material-ui/core'
 import ThumbUpAltRoundedIcon from '@material-ui/icons/ThumbUpAltRounded';
-import {PRIMARY_COLOR, BUTTON_COLOR, BKG_COLOR }  from '../../constant'
+import { PRIMARY_COLOR, BUTTON_COLOR }  from '../../constant'
 
 export default function PostDetail({post, comments, user, submitEdit, deleteButton, submitComment, submitEditComment, deleteCommentButton, likePost}) {
   const [editing, setEditing] = useState(false)

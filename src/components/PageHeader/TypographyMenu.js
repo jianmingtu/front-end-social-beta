@@ -5,7 +5,7 @@ import Paper from '@material-ui/core/Paper'
 import { makeStyles } from '@material-ui/core/styles'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import Typography from '@material-ui/core/Typography'
-import {signOutIcon, settingIcon} from '../SVG'
+import { signOutIcon, settingIcon } from '../SVG'
 import Profile from '../Profile/Profile'
 
 const useStyles = makeStyles({
@@ -15,8 +15,7 @@ const useStyles = makeStyles({
 })
 
 export default function TypographyMenu({user, toProfile, getProfile, signOut, error}) {
-
- const classes = useStyles();
+  const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -26,7 +25,6 @@ export default function TypographyMenu({user, toProfile, getProfile, signOut, er
   const handleClose = () => {
     setOpen(false);
   };
-
 
   return (
     <Paper className={classes.root}>

@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react'
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Redirect
+  Route
 } from "react-router-dom"
 
 import HeaderNavigation from './layouts/HeaderNavigation'
@@ -12,13 +11,13 @@ import UserProfilePage from './layouts/UserProfilePage'
 import PostPage from './layouts/PostPage'
 import PostDetailPage from './layouts/PostDetailPage'
 import styles from './App.module.css'
-import {currentDecodeUser, signOut} from './network/userAuth'
+import { currentDecodeUser, signOut } from './network/userAuth'
 
 export default function App() {
   const [user, setUser] = useState({})
 
   useEffect( async () => {
-     const decodedToken = await currentDecodeUser();
+    const decodedToken = await currentDecodeUser();
     setUser(decodedToken);
   },[])
 

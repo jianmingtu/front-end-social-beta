@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import styles from './Login.module.css'
-import {CONS_EMAIL, CONS_PASSWORD,CONS_USERNAME, CONS_PHOTO }  from '../../constant'
+import { CONS_EMAIL, CONS_PASSWORD,CONS_USERNAME }  from '../../constant'
 
 export default function Login({authFunc, error, setError}) {
     const  SIGNUP = 0, LOGIN = 1 

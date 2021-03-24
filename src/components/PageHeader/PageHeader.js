@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import {useHistory} from 'react-router-dom' 
 
 import styles from './PageHeader.module.css'
 import FadeMenu from './FadeMenu'
 
 export default function PageHeader({user, toProfile, getProfile, signOut, error}) {
-
   const history = useHistory();
 
   return (
