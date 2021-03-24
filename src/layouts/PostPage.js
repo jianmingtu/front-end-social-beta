@@ -4,15 +4,12 @@ import Post from '../components/PostPage/Post'
 import NewPostForm from '../components/PostPage/NewPostForm'
 import { getPosts, createPost, updatePost, deletePost, addLike, deleteLike } from '../network/network'
 import styles from './Layout.module.css'
-import {useHistory} from 'react-router-dom'
-import {currentDecodeUser} from '../network/userAuth'
+import { currentDecodeUser } from '../network/userAuth'
 
 export default function PostPage({user}) {
   const [posts, setPosts] = useState([])
   const [newPostError, setNewPostError] = useState("")
   const [error, setError] = useState("")
-
-  const history = useHistory()
 
   useEffect( async () => {
     getAPI()
@@ -24,15 +21,15 @@ export default function PostPage({user}) {
   }, [user])  
 
   const updatePostLikes = async (posts) => {
-
     let newPosts = posts
 
     const decodedToken = await currentDecodeUser();  
     // if the current user is in the post's likes, set liked flag to be true
     newPosts = posts.map(post => {
-      
       // if the current user voted Like on this post, the Like Icon shows in color and its value is set to be true
-      const liked = post.likeUserIds.find( likeUserId => {return decodedToken ? likeUserId === decodedToken.sub : false})
+      const liked = post.likeUserIds.find(likeUserId => {
+        return decodedToken ? likeUserId === decodedToken.sub : false
+      })
       return { ...post,  liked: liked ? true : false }
     })
 
@@ -73,37 +70,33 @@ export default function PostPage({user}) {
   }
 
   const likePost = async (postId) => {
-
     try {
+      if(!user)  throw new Error("no user logged in.")
 
-        if(!user)  throw new Error("no user logged in.")
+      // To avoid Await in a For-Loop, we choose promise all
+      const promises = posts.map(post => {
+          if( post._id === postId) {
+              if (post.liked) { 
+                  deleteLike({postId: postId})
+                return { ...post, totalLikes: post.totalLikes-1, liked: false }
+              } else {
+                  addLike({postId: postId})
+                return { ...post, totalLikes: post.totalLikes+1, liked: true }
+              }
+          }
+          else{
+            return post
+          }
+      })
 
-        // To avoid Await in a For-Loop, we choose promise all
-        const promises = posts.map(post => {
-            if( post._id === postId) {
-               if (post.liked) { 
-                   deleteLike({postId: postId})
-                  return { ...post, totalLikes: post.totalLikes-1, liked: false }
-               } else {
-                   addLike({postId: postId})
-                  return { ...post, totalLikes: post.totalLikes+1, liked: true }
-               }
-            }
-            else{
-              return post
-            }
-        })
+      const newPosts = await Promise.all(promises)
 
-        const newPosts = await Promise.all(promises)
+      setPosts(newPosts)
 
-        setPosts(newPosts)
-
-      } catch (error) {
-        setError(error.message)
+    } catch (error) {
+      setError(error.message)
     }
-
   }
-
 
   return (
     <div className={styles.container}>

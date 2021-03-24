@@ -37,7 +37,7 @@ export default function App() {
             <LoginPage setUserFunc={setUserFunc} />
           </Route>
           <Route path="/user/:userId?"> {/* Currently visiting other user is on hold */}
-            <UserProfilePage user={user} />
+            <UserProfilePage user={user} setUserFunc={setUserFunc} />
           </Route>
           <Route path="/post/:postId">
             <PostDetailPage user={user} />

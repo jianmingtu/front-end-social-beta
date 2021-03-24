@@ -5,7 +5,7 @@ import OptionMenu from '../OptionMenu'
 import styles from './Post.module.css'
 import { IconButton, Typography } from '@material-ui/core'
 import ThumbUpAltRoundedIcon from '@material-ui/icons/ThumbUpAltRounded';
-import {PRIMARY_COLOR, BUTTON_COLOR, BKG_COLOR }  from '../../constant'
+import {PRIMARY_COLOR, BUTTON_COLOR }  from '../../constant'
 
 export default function Post({post, user, likePost, submitEdit, deleteButton, error}) {
   const [editing, setEditing] = useState(false)

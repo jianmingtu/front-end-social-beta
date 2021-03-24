@@ -81,12 +81,11 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function Profile( {open, user, handleClose, toProfile, getProfile, error }) {
+export default function EditProfile({open, user, submitProfile, getProfile, handleClose, error}) {
   const classes = useStyles();
   const [filePreview, setFilePreview] = useState();
   const [file, setFile] = useState();
   const [description, setDescription] = useState("")
-
 
   useEffect( async () => {
     if(open) {
@@ -103,7 +102,7 @@ export default function Profile( {open, user, handleClose, toProfile, getProfile
 
   const submit = (event) => {
     event.preventDefault()
-    toProfile({file, description})
+    submitProfile({file, description})
   }
 
   const deleteImage = () => {

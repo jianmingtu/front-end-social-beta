@@ -6,7 +6,6 @@ import { makeStyles } from '@material-ui/core/styles'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import Typography from '@material-ui/core/Typography'
 import { signOutIcon, settingIcon } from '../SVG'
-import Profile from '../Profile/Profile'
 
 const useStyles = makeStyles({
   root: {
@@ -14,17 +13,8 @@ const useStyles = makeStyles({
   },
 })
 
-export default function TypographyMenu({user, toProfile, getProfile, signOut, error}) {
+export default function TypographyMenu({toProfile, signOut}) {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   return (
     <Paper className={classes.root}>
@@ -33,10 +23,9 @@ export default function TypographyMenu({user, toProfile, getProfile, signOut, er
           <ListItemIcon>
             {settingIcon}				
           </ListItemIcon>
-          <Typography variant="inherit" noWrap onClick={handleClickOpen}>
+          <Typography variant="inherit" noWrap onClick={toProfile}>
             Profile
           </Typography>
-          <Profile fullScreen open={open} user = {user} toProfile={toProfile} getProfile={getProfile} handleClose={handleClose} error={error} />
         </MenuItem>
         <MenuItem>
           <ListItemIcon>
