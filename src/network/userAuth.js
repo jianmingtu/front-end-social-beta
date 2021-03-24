@@ -12,7 +12,6 @@ var poolData = {
 	ClientId: config.poolData.CLIENT_ID, // Your client id here
 };
 
-
 const userPool = new CognitoUserPool(poolData)
 
 export function signUp({username, password, email}) {
@@ -103,8 +102,6 @@ export function userToken() {
     })
   })
 }
-
-
 
 // the decode a user's Jwt Token and return
 export function currentDecodeUser() {

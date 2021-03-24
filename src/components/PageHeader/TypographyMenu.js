@@ -5,7 +5,7 @@ import Paper from '@material-ui/core/Paper'
 import { makeStyles } from '@material-ui/core/styles'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import Typography from '@material-ui/core/Typography'
-import {signOutIcon, settingIcon} from '../SVG'
+import { signOutIcon, settingIcon } from '../SVG'
 
 const useStyles = makeStyles({
   root: {

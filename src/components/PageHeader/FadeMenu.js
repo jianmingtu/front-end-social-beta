@@ -38,7 +38,7 @@ export default function FadeMenu({toProfile, signOut}) {
           horizontal: "center"
         }}
       >
-        <TypographyMenu toProfile = {toProfile} signOut = {signOut} />
+        <TypographyMenu toProfile={toProfile} signOut={signOut} />
       </Menu>
     </div>
   )

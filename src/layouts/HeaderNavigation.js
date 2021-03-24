@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react'
-import {useHistory} from 'react-router-dom'
+import React from 'react'
+import { useHistory } from 'react-router-dom'
 import PageHeader from '../components/PageHeader/PageHeader'
-import {signOut} from '../network/userAuth'
-
 
 export default function HeaderNavigation({user, setUserFunc}) {
   const history = useHistory()
   
   const toProfile = () => {
+    console.log("Profile")
     if (user) {
       history.push(`/user/${user.sub}`)
     } else {
@@ -16,9 +15,9 @@ export default function HeaderNavigation({user, setUserFunc}) {
   }
 
   const onSignOut = () => {
-     console.log("Sign out")
-     setUserFunc(null)
-     history.push("/")
+    console.log("Sign out")
+    setUserFunc(null)
+    history.push("/")
   }
 
   return (
