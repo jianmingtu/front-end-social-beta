@@ -27,14 +27,15 @@ export default function UserProfile({user, submitProfile, getProfile, error}) {
           <div className={styles.profileContainer}>
             <span className={styles.profileUser}>
               <span className={styles.user}>
-                <img className={styles.avatar} src="https://cdn.discordapp.com/attachments/738356484462608424/816066240917405716/unknown.png" />
+                <img className={styles.avatar} src={user.avatar} />
                 <p>{user["cognito:username"]}</p>
               </span>
               <button onClick={handleClickOpen}>Edit</button>
             </span>
-            <EditProfile fullScreen open={open} user = {user} submitProfileClicked={submitProfileClicked} getProfile={getProfile} handleClose={handleClose} error={error} />
+            <EditProfile fullScreen open={open} user={user} submitProfileClicked={submitProfileClicked} getProfile={getProfile} handleClose={handleClose} error={error} />
             <span className={styles.profileContent}>
               <p>Email: {user.email}</p>
+              <p>Bio: {user.description}</p>
             </span>
           </div>
         :

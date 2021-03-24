@@ -12,6 +12,7 @@ export default function UserProfilePage({user, setUserFunc}) {
   const submitProfile = async (data) => {
     try {
       await network.saveProfile(data)
+      await getProfile()
     } catch (error) {
       setError(error.message)
     }

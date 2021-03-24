@@ -87,13 +87,13 @@ export default function EditProfile({open, user, submitProfileClicked, getProfil
   const [file, setFile] = useState();
   const [description, setDescription] = useState("")
 
-  useEffect( async () => {
+  useEffect(async () => {
     if(open) {
       getProfile()
     }
   }, [open])
 
-  useEffect( async () => {
+  useEffect(async () => {
     if(user) {
       if(user.avatar) setFilePreview(user.avatar)
       if(user.description) setDescription(user.description)

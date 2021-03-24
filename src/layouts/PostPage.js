@@ -11,7 +11,7 @@ export default function PostPage({user}) {
   const [newPostError, setNewPostError] = useState("")
   const [error, setError] = useState("")
 
-  useEffect( async () => {
+  useEffect(async () => {
     getAPI()
   }, [])
 

@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import PageHeader from '../components/PageHeader/PageHeader'
-import * as network from '../network/network'
 
 export default function HeaderNavigation({user, setUserFunc}) {
   const history = useHistory()
