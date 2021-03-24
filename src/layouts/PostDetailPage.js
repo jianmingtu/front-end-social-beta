@@ -8,7 +8,7 @@ import {currentDecodeUser} from '../network/userAuth'
 export default function PostDetailPage({user}) {
   const [post, setPost] = useState()
   const [comments, setComment] = useState([])
-   const [error, setError] = useState("")
+  const [error, setError] = useState("")
 
   let { postId } = useParams()
   const history = useHistory()
@@ -31,6 +31,7 @@ export default function PostDetailPage({user}) {
 
   const getCommentAPI = async () => {
     const resultComments = await getComments({postId})
+    console.log(resultComments)
     setComment(resultComments)
   }
 
@@ -106,9 +107,7 @@ export default function PostDetailPage({user}) {
     }
   }
 
-
-   const updatePostLikes = async (post) => {
-
+  const updatePostLikes = async (post) => {
     let newPost = post
 
     if(post) {

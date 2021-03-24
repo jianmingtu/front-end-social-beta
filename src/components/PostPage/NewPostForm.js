@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 
 import styles from './NewPostForm.module.css'
 
-export default function NewPostForm({submitPost, newPostError}) {
+export default function NewPostForm({user, submitPost, newPostError}) {
   const [showFileInput, setShowFileInput] = useState(false)
 
-  const handleImage = (e) => {
+  const handleImage = () => {
     setShowFileInput(!showFileInput)
   }
 
@@ -19,7 +19,7 @@ export default function NewPostForm({submitPost, newPostError}) {
 
   return (
     <div className={styles.container}>
-      <img className={styles.avatar} src="https://cdn.discordapp.com/attachments/738356484462608424/816066240917405716/unknown.png" />
+      <img className={styles.avatar} src={user.avatar} />
       <form className={styles.inputForm} onSubmit={handleNewPost}>
         <textarea className={styles.formText} name="content" placeholder="What's happening?" />
         <span className={styles.formButton}>
@@ -33,7 +33,6 @@ export default function NewPostForm({submitPost, newPostError}) {
         }
         {!!newPostError && <p>{newPostError}</p>}
       </form>
-
     </div>
   )
 }

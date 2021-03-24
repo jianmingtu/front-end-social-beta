@@ -17,15 +17,15 @@ import { getProfile } from './network/network'
 export default function App() {
   const [user, setUser] = useState({})
 
-  useEffect( async () => {
+  useEffect(async () => {
     const decodedToken = await currentDecodeUser();
-    const result = await getProfile(decodedToken)
+    const result = await getProfile(decodedToken.sub)
     if(result && result.data && result.data.user) {
       setUserFunc({...decodedToken, avatar: result.data.user.avatar, description: result.data.user.description})
     } else {
       setUser(decodedToken)
     }
-  },[])
+  }, [])
 
   // update the current user state.  if update is falsely value,  call signOut to remove user tokens from local storage.  
   const setUserFunc = userUpdate => {

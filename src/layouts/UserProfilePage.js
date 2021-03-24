@@ -22,7 +22,7 @@ export default function UserProfilePage({user, setUserFunc}) {
     try {
       // request the current user
       if(!!user) {
-        const result = await network.getProfile(user)
+        const result = await network.getProfile(user.sub)
         if(result && result.data && result.data.user) {
           setUserFunc({...user, avatar: result.data.user.avatar, description: result.data.user.description})
         }

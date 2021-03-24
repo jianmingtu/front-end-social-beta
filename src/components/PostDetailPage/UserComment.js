@@ -1,10 +1,21 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import OptionMenu from '../OptionMenu'
 import styles from './UserComment.module.css'
+import { getProfile } from '../../network/network'
 
 export default function UserComment({comment, user, submitEditComment, deleteCommentButton}) {
   const [editing, setEditing] = useState(false)
+  const [avatar, setAvatar] = useState("")
+
+  useEffect(async () => {
+    if(comment) {
+      const result = await getProfile(comment.user.id)
+      if(result && result.data && result.data.user) {
+        setAvatar(result.data.user.avatar)
+      }
+    }
+  }, [!comment])
 
   const editButton = (e) => {
     setEditing(true)
@@ -23,7 +34,7 @@ export default function UserComment({comment, user, submitEditComment, deleteCom
   return (
     <div className={styles.comment}>
       <div className={styles.commentContainer}>
-        <img className={styles.avatar} src="https://cdn.discordapp.com/attachments/738356484462608424/816066240917405716/unknown.png" />
+        <img className={styles.avatar} src={avatar} />
         <div className={styles.commentBlock}>
           <span className={styles.commentUser}>
             <p>{comment.user.username}</p>

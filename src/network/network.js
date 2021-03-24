@@ -138,9 +138,9 @@ export async function deleteLike({postId}) {
   }
 }
 
-export async function getProfile(user) {
+export async function getProfile(userId) {
   try {
-    return await axios.get(`${BASE_API}/users/${user.sub}`)
+    return await axios.get(`${BASE_API}/users/${userId}`)
   } catch (error) {
     throw (error.message || JSON.stringify(error))
   }

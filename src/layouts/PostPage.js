@@ -101,9 +101,9 @@ export default function PostPage({user}) {
   return (
     <div className={styles.container}>
     <p>{error}</p>
-      {!!user && <NewPostForm submitPost={submitPost} newPostError={newPostError} />}
+      {!!user && <NewPostForm user={user} submitPost={submitPost} newPostError={newPostError} />}
       {
-        (posts && posts.length) > 0 ?
+        (posts && posts.length > 0) ?
           posts.map(post => (
             <Post 
               key={post._id}

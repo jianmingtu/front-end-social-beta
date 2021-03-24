@@ -1,16 +1,27 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
 import OptionMenu from '../OptionMenu'
 import styles from './Post.module.css'
 import { IconButton, Typography } from '@material-ui/core'
-import ThumbUpAltRoundedIcon from '@material-ui/icons/ThumbUpAltRounded';
-import {PRIMARY_COLOR, BUTTON_COLOR }  from '../../constant'
+import ThumbUpAltRoundedIcon from '@material-ui/icons/ThumbUpAltRounded'
+import { PRIMARY_COLOR, BUTTON_COLOR }  from '../../constant'
+import { getProfile } from '../../network/network'
 
 export default function Post({post, user, likePost, submitEdit, deleteButton, error}) {
   const [editing, setEditing] = useState(false)
+  const [avatar, setAvatar] = useState("")
 
   const history = useHistory()
+
+  useEffect(async () => {
+    if(post) {
+      const result = await getProfile(post.user.id)
+      if(result && result.data && result.data.user) {
+        setAvatar(result.data.user.avatar)
+      }
+    }
+  }, [!post])
 
   const editButton = (e) => {
     setEditing(true)
@@ -34,7 +45,7 @@ export default function Post({post, user, likePost, submitEdit, deleteButton, er
     <div className={styles.postContainer} >
       <span className={styles.postUser}>
         <span className={styles.user}>
-          <img className={styles.avatar} src="https://cdn.discordapp.com/attachments/738356484462608424/816066240917405716/unknown.png" />
+          <img className={styles.avatar} src={avatar} />
           <p>{post.user.username}</p>
         </span>
         {
@@ -69,13 +80,13 @@ export default function Post({post, user, likePost, submitEdit, deleteButton, er
         }
       </span>
       <span className={styles.likeComment} >
-               <span className={styles.buttonCounter}>
-                  <IconButton fontSize="medium" onClick={() => likePost(post._id)} >
-                    {post.liked ? <ThumbUpAltRoundedIcon fontSize="medium" style={{ color: PRIMARY_COLOR }}  /> : <ThumbUpAltRoundedIcon fontSize="medium" style={{ color: BUTTON_COLOR }} /> }
-                  </IconButton>
-                  <Typography variant="body2" color="textPrimary" component="p">
-                    {post.totalLikes}</Typography>
-                </span>
+        <span className={styles.buttonCounter}>
+          <IconButton fontSize="medium" onClick={() => likePost(post._id)} >
+            {post.liked ? <ThumbUpAltRoundedIcon fontSize="medium" style={{ color: PRIMARY_COLOR }}  /> : <ThumbUpAltRoundedIcon fontSize="medium" style={{ color: BUTTON_COLOR }} /> }
+          </IconButton>
+          <Typography variant="body2" color="textPrimary" component="p">
+            {post.totalLikes}</Typography>
+        </span>
         <span className={styles.buttonCounter}>
           <button onClick={toDetail} name={post._id}>Comment</button>
           <p>{post.totalComments}</p>
