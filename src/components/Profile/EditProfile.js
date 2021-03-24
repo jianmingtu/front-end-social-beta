@@ -81,7 +81,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function EditProfile({open, user, submitProfile, getProfile, handleClose, error}) {
+export default function EditProfile({open, user, submitProfileClicked, getProfile, handleClose, error}) {
   const classes = useStyles();
   const [filePreview, setFilePreview] = useState();
   const [file, setFile] = useState();
@@ -102,7 +102,7 @@ export default function EditProfile({open, user, submitProfile, getProfile, hand
 
   const submit = (event) => {
     event.preventDefault()
-    submitProfile({file, description})
+    submitProfileClicked({file, description})
   }
 
   const deleteImage = () => {
