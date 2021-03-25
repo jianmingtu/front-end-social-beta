@@ -9,7 +9,7 @@ import ThumbUpAltRoundedIcon from '@material-ui/icons/ThumbUpAltRounded'
 import { PRIMARY_COLOR, BUTTON_COLOR }  from '../../constant'
 import { getProfile } from '../../network/network'
 
-export default function PostDetail({post, comments, user, submitEdit, deleteButton, submitComment, submitEditComment, deleteCommentButton, likePost}) {
+export default function PostDetail({post, comments, user, submitEdit, deleteButton, submitComment, submitEditComment, deleteCommentButton, likePost, followUser}) {
   const [editing, setEditing] = useState(false)
   const [avatar, setAvatar] = useState("")
 
@@ -61,7 +61,9 @@ export default function PostDetail({post, comments, user, submitEdit, deleteButt
                     post.user.id == user.sub ?
                       <OptionMenu editButton={editButton} deleteButton={deleteButton} />
                     :
-                      <button>Follow</button>
+                      <button onClick={followUser()}>
+                        {post.user.followed ? <>Unfollow</> : <>Follow</>}
+                      </button>
                   : null
                 }
               </span>

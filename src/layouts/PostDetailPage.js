@@ -104,6 +104,10 @@ export default function PostDetailPage({user}) {
       setError(error)
     }
   }
+  
+  const followUser = async () => {
+    
+  }
 
   const updatePostLikes = async (post) => {
     let newPost = post
@@ -133,6 +137,7 @@ export default function PostDetailPage({user}) {
       submitEditComment={submitEditComment}
       deleteCommentButton={deleteCommentButton}
       likePost = {likePost}
+      followUser = {followUser}
     />
   )
 }

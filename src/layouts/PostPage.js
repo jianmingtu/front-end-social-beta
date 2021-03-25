@@ -98,6 +98,10 @@ export default function PostPage({user}) {
     }
   }
 
+  const followUser = async () => {
+    
+  }
+
   return (
     <div className={styles.container}>
     <p>{error}</p>
@@ -110,6 +114,7 @@ export default function PostPage({user}) {
               post={post}
               user={user}
               likePost={likePost}
+              followUser={followUser}
               submitEdit={submitEdit}
               deleteButton={deleteButton}
               error = {error}
