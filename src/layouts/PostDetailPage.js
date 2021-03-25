@@ -85,9 +85,7 @@ export default function PostDetailPage({user}) {
   }
 
   const likePost = async (postId) => {
-
     try {
-
       if(!user)  throw new Error("no user logged in.")
 
       let newPost = null 
@@ -113,9 +111,11 @@ export default function PostDetailPage({user}) {
     if(post) {
       const decodedToken = await currentDecodeUser();  
       // if the current user is in the post's likes, set liked flag to be true
-        // if the current user voted Like on this post, the Like Icon shows in color and its value is set to be true
-        const liked = post.likeUserIds.find( likeUserId => {return decodedToken ? likeUserId === decodedToken.sub : false})
-        newPost = { ...post,  liked: liked ? true : false }
+      // if the current user voted Like on this post, the Like Icon shows in color and its value is set to be true
+      const liked = post.likeUserIds.find(likeUserId => {
+        return decodedToken ? likeUserId === decodedToken.sub : false
+      })
+      newPost = { ...post, liked: liked }
     }
 
     return newPost

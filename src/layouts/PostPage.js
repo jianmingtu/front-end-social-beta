@@ -30,7 +30,7 @@ export default function PostPage({user}) {
       const liked = post.likeUserIds.find(likeUserId => {
         return decodedToken ? likeUserId === decodedToken.sub : false
       })
-      return { ...post,  liked: liked ? true : false }
+      return { ...post,  liked: liked }
     })
 
     return newPosts
@@ -75,18 +75,18 @@ export default function PostPage({user}) {
 
       // To avoid Await in a For-Loop, we choose promise all
       const promises = posts.map(post => {
-          if( post._id === postId) {
-              if (post.liked) { 
-                  deleteLike({postId: postId})
-                return { ...post, totalLikes: post.totalLikes-1, liked: false }
-              } else {
-                  addLike({postId: postId})
-                return { ...post, totalLikes: post.totalLikes+1, liked: true }
-              }
+        if( post._id === postId) {
+          if (post.liked) { 
+            deleteLike({postId: postId})
+            return { ...post, totalLikes: post.totalLikes-1, liked: false }
+          } else {
+            addLike({postId: postId})
+            return { ...post, totalLikes: post.totalLikes+1, liked: true }
           }
-          else{
-            return post
-          }
+        }
+        else{
+          return post
+        }
       })
 
       const newPosts = await Promise.all(promises)
