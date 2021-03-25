@@ -33,7 +33,7 @@ Please refer to the [backend repository](https://github.com/BCIT-SSD-2020-21/ser
 
 ##### Backend
 
--   DyanmoDB +  Lambda function + EndPoints
+-   MongoDB Atlas +  Lambda function + EndPoints
 -   Cognito for signup and login email confirmation
 -   CRUD capability 
 -   Database design : 
