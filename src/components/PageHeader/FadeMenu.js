@@ -3,6 +3,9 @@ import Button from '@material-ui/core/Button'
 import Menu from '@material-ui/core/Menu'
 import Fade from '@material-ui/core/Fade'
 import TypographyMenu from './TypographyMenu'
+import ArrowDropDownCircleIcon from '@material-ui/icons/ArrowDropDownCircle';
+import { IconButton, Typography } from '@material-ui/core'
+import { PRIMARY_COLOR }  from '../../constant'
 
 export default function FadeMenu({toProfile, signOut}) {
   const [anchorEl, setAnchorEl] = React.useState(null)
@@ -18,9 +21,10 @@ export default function FadeMenu({toProfile, signOut}) {
 
   return (
     <div>
-      <Button aria-controls="fade-menu" aria-haspopup="true" onClick={handleClick}>
-        DropDown Button
-      </Button>
+    
+      <IconButton style={{color : PRIMARY_COLOR}}   aria-controls="fade-menu" aria-haspopup="true" onClick={handleClick}>
+        <ArrowDropDownCircleIcon fontSize="large" />
+      </IconButton>
       <Menu
         id="fade-menu"
         anchorEl={anchorEl}
