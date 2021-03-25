@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams, useHistory } from 'react-router-dom'
 
 import PostDetail from '../components/PostDetailPage/PostDetail'
-import { getPost, updatePost, deletePost, getComments, createComment, updateComment, deleteComment, addLike, deleteLike } from '../network/network'
+import { getPost, updatePost, deletePost, getComments, createComment, updateComment, deleteComment, addLike, deleteLike, addFollower, deleteFollower } from '../network/network'
 import {currentDecodeUser} from '../network/userAuth'
 
 export default function PostDetailPage({user}) {
@@ -106,7 +106,22 @@ export default function PostDetailPage({user}) {
   }
   
   const followUser = async () => {
-    
+    try{
+      if(!user)  throw new Error("no user logged in.")
+
+      let newPost = null
+      if (post.user.followed) {
+        await deleteFollower(post.user.id)
+        newPost = { ...post, user: { ...post.user, followed: false } }
+      } else {
+        await addFollower(post.user.id)
+        newPost = { ...post, user: { ...post.user, followed: true } }
+      }
+      setPost(newPost)
+
+    } catch (error) {
+      setError(error)
+    }
   }
 
   const updatePostLikes = async (post) => {

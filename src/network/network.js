@@ -166,4 +166,20 @@ export async function saveProfile({file, description}) {
   }
 }
 
+export async function addFollower({userId}) {
+  try {
+    const headers = await authHeader()
+    await axios.post(`${BASE_API}/users/${userId}/followers`, { content: {} } , { headers })
+  } catch (error) {
+    throw (error.message || JSON.stringify(error))
+  }
+}
 
+export async function deleteFollower({userId}) {
+  try {
+    const headers = await authHeader()
+    await axios.delete(`${BASE_API}/users/${userId}/followers`, { headers })
+  } catch (error) {
+    throw (error.message || JSON.stringify(error))
+  }
+}
