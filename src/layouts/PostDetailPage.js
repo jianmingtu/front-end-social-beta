@@ -140,6 +140,10 @@ export default function PostDetailPage({user}) {
     return newPost
   } 
 
+  const updatePostFollowers = async (post) => {
+    
+  } 
+
   return (
     //pass in comment list here for it to be rendered
     <PostDetail 

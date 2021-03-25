@@ -53,7 +53,7 @@ export default function Post({post, user, likePost, followUser, submitEdit, dele
             post.user.id == user.sub ?
               <OptionMenu editButton={editButton} deleteButton={deleteButton} thisId={post._id} />
             :
-              <button onClick={followUser()}>
+              <button onClick={() => followUser(post.user.id)}>
                 {post.user.followed ? <>Unfollow</> : <>Follow</>}
               </button>
           : null

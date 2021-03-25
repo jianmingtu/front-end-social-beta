@@ -61,7 +61,7 @@ export default function PostDetail({post, comments, user, submitEdit, deleteButt
                     post.user.id == user.sub ?
                       <OptionMenu editButton={editButton} deleteButton={deleteButton} />
                     :
-                      <button onClick={followUser}>
+                      <button onClick={() => followUser(post.user.id)}>
                         {post.user.followed ? <>Unfollow</> : <>Follow</>}
                       </button>
                   : null
@@ -106,6 +106,7 @@ export default function PostDetail({post, comments, user, submitEdit, deleteButt
                       user={user}
                       submitEditComment={submitEditComment}
                       deleteCommentButton={deleteCommentButton}
+                      followUser={followUser}
                     />
                   )).reverse()
                 :

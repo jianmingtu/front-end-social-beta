@@ -4,7 +4,7 @@ import OptionMenu from '../OptionMenu'
 import styles from './UserComment.module.css'
 import { getProfile } from '../../network/network'
 
-export default function UserComment({comment, user, submitEditComment, deleteCommentButton}) {
+export default function UserComment({comment, user, submitEditComment, deleteCommentButton, followUser}) {
   const [editing, setEditing] = useState(false)
   const [avatar, setAvatar] = useState("")
 
@@ -43,7 +43,9 @@ export default function UserComment({comment, user, submitEditComment, deleteCom
                 comment.user.id == user.sub ?
                   <OptionMenu editButton={editButton} deleteButton={deleteCommentButton} thisId={comment._id} />
                 :
-                  <button>Follow</button>
+                <button onClick={() => followUser(comment.user.id)}>
+                  {comment.user.followed ? <>Unfollow</> : <>Follow</>}
+                </button>
               : null
             }
           </span>
