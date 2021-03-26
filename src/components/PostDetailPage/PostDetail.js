@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
 import UserComment from './UserComment'
 import CommentForm from './CommentForm'
@@ -7,20 +7,9 @@ import styles from './PostDetail.module.css'
 import { IconButton, Typography } from '@material-ui/core'
 import ThumbUpAltRoundedIcon from '@material-ui/icons/ThumbUpAltRounded'
 import { PRIMARY_COLOR, BUTTON_COLOR }  from '../../constant'
-import { getProfile } from '../../network/network'
 
 export default function PostDetail({post, comments, user, submitEdit, deleteButton, submitComment, submitEditComment, deleteCommentButton, likePost, followUser}) {
   const [editing, setEditing] = useState(false)
-  const [avatar, setAvatar] = useState("")
-
-  useEffect(async () => {
-    if(post) {
-      const result = await getProfile(post.user.id)
-      if(result && result.data && result.data.user) {
-        setAvatar(result.data.user.avatar)
-      }
-    }
-  }, [!post])
 
   const editButton = (e) => {
     setEditing(true)
@@ -53,7 +42,7 @@ export default function PostDetail({post, comments, user, submitEdit, deleteButt
             <div className={styles.postContainer}>
               <span className={styles.postUser}>
                 <span className={styles.user}>
-                  <img className={styles.avatar} src={avatar} />
+                  <img className={styles.avatar} src={post.user.avatar} />
                   <p>{post.user.username}</p>
                 </span>
                 {

@@ -1,22 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
 import OptionMenu from '../OptionMenu'
 import styles from './UserComment.module.css'
-import { getProfile } from '../../network/network'
-import { LocalDining } from '@material-ui/icons'
 
 export default function UserComment({comment, user, submitEditComment, deleteCommentButton, followUser}) {
   const [editing, setEditing] = useState(false)
-  const [avatar, setAvatar] = useState("")
-
-  useEffect(async () => {
-    if(comment) {
-      const result = await getProfile(comment.user.id)
-      if(result && result.data && result.data.user) {
-        setAvatar(result.data.user.avatar)
-      }
-    }
-  }, [!comment])
 
   const editButton = (e) => {
     setEditing(true)
@@ -35,7 +23,7 @@ export default function UserComment({comment, user, submitEditComment, deleteCom
   return (
     <div className={styles.comment}>
       <div className={styles.commentContainer}>
-        <img className={styles.avatar} src={avatar} />
+        <img className={styles.avatar} src={comment.user.avatar} />
         <div className={styles.commentBlock}>
           <span className={styles.commentUser}>
             {console.log(comment)}

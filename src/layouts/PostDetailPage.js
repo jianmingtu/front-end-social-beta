@@ -20,13 +20,67 @@ export default function PostDetailPage({user}) {
 
   const getPostAPI = async () => {
     const resultPost = await getPost({postId})
-    const newPost = await updatePostLikes(resultPost)
-    await updatePostFollowers(newPost)
+    const newLikePost = await updatePostLikes(resultPost)
+    const newPost = await updatePostFollowers(newLikePost)
+    setPost(newPost)
   }
 
   const getCommentAPI = async () => {
     const resultComments = await getComments({postId})
-    await updateCommentFollowers(resultComments)
+    const newComments = await updateCommentFollowers(resultComments)
+    setComment(newComments)
+  }
+
+  const updatePostLikes = async (post) => {
+    let newPost = post
+
+    if(post) {
+      const decodedToken = await currentDecodeUser()
+      // if the current user is in the post's likes, set liked flag to be true
+      // if the current user voted Like on this post, the Like Icon shows in color and its value is set to be true
+      const liked = post.likeUserIds.find(likeUserId => {
+        return decodedToken ? likeUserId === decodedToken.sub : false
+      })
+      newPost = { ...post, liked: liked ? true : false }
+    }
+
+    return newPost
+  } 
+
+  const updatePostFollowers = async (post) => {
+    let newPost = null
+
+    const decodedToken = await currentDecodeUser()
+
+    if(post) {
+      //Check post detail and add to post
+      const result = await getProfile(post.user.id)
+      if(result && result.data && result.data.user) {
+        const followed = result.data.user.followers.find(follower => {
+          return follower === decodedToken.sub
+        })
+        newPost = { ...post, user: { ...post.user, avatar: result.data.user.avatar, followed: followed ? true : false} }
+      }
+    }
+
+    return newPost
+  } 
+
+  const updateCommentFollowers = async (comments) => {
+    const decodedToken = await currentDecodeUser()
+
+    const promises = comments.map(async comment => {
+      const result = await getProfile(comment.user.id)
+      if(result && result.data && result.data.user) {
+        const followed = result.data.user.followers.find(follower => {
+          return follower === decodedToken.sub
+        })
+        return { ...comment, user: { ...comment.user, avatar: result.data.user.avatar, followed: followed ? true : false} }
+      }
+    })
+    const newComments = await Promise.all(promises)
+
+    return newComments
   }
 
   const submitEdit = async (data) => {
@@ -122,60 +176,6 @@ export default function PostDetailPage({user}) {
       }
     } catch (error) {
       setError(error)
-    }
-  }
-
-  const updatePostLikes = async (post) => {
-    let newPost = post
-
-    if(post) {
-      const decodedToken = await currentDecodeUser()
-      // if the current user is in the post's likes, set liked flag to be true
-      // if the current user voted Like on this post, the Like Icon shows in color and its value is set to be true
-      const liked = post.likeUserIds.find(likeUserId => {
-        return decodedToken ? likeUserId === decodedToken.sub : false
-      })
-      newPost = { ...post, liked: liked ? true : false }
-    }
-
-    return newPost
-  } 
-
-  const updatePostFollowers = async (post) => {
-    let newPost = null
-
-    const decodedToken = await currentDecodeUser()
-
-    if(post) {
-      //Check post detail and add to post
-      const result = await getProfile(post.user.id)
-      if(result && result.data && result.data.user) {
-        console.log(result.data.user.followers)
-        const followed = result.data.user.followers.find(follower => {
-          return follower === decodedToken.sub
-        })
-        newPost = { ...post, user: { ...post.user, avatar: result.data.user, followed: followed ? true : false} }
-      }
-      setPost(newPost)
-    }
-  } 
-
-  const updateCommentFollowers = async (comments) => {
-    const decodedToken = await currentDecodeUser()
-
-    if(comments.length > 0) {
-      const promises = comments.map(async comment => {
-        const result = await getProfile(comment.user.id)
-        if(result && result.data && result.data.user) {
-          const followed = result.data.user.followers.find(follower => {
-            return follower === decodedToken.sub
-          })
-          return { ...comment, user: { ...comment.user, avatar: result.data.user, followed: followed ? true : false} }
-        }
-      })
-      const newComments = await Promise.all(promises)
-
-      setComment(newComments)
     }
   }
 

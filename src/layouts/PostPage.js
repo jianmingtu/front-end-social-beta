@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import Post from '../components/PostPage/Post'
 import NewPostForm from '../components/PostPage/NewPostForm'
-import { getPosts, createPost, updatePost, deletePost, addLike, deleteLike } from '../network/network'
+import { getPosts, createPost, updatePost, deletePost, addLike, deleteLike, getProfile, addFollower, deleteFollower } from '../network/network'
 import styles from './Layout.module.css'
 import { currentDecodeUser } from '../network/userAuth'
 
@@ -14,6 +14,13 @@ export default function PostPage({user}) {
   useEffect(async () => {
     await getAPI()
   }, [])
+
+  const getAPI = async () => {
+    const postsResult = await getPosts()
+    const newLikePosts = await updatePostLikes(postsResult)
+    const newPosts = await updateFollowers(newLikePosts)
+    setPosts(newPosts)
+  }
 
   const updatePostLikes = async (posts) => {
     let newPosts = []
@@ -31,10 +38,21 @@ export default function PostPage({user}) {
     return newPosts
   } 
 
-  const getAPI = async () => {
-    const posts = await getPosts()
-    const newPosts = await updatePostLikes(posts)
-    setPosts(newPosts)
+  const updateFollowers = async (posts) => {
+    const decodedToken = await currentDecodeUser()
+
+    const promises = posts.map(async post => {
+      const result = await getProfile(post.user.id)
+      if(result && result.data && result.data.user) {
+        const followed = result.data.user.followers.find(follower => {
+          return follower === decodedToken.sub
+        })
+        return { ...post, user: { ...post.user, avatar: result.data.user.avatar, followed: followed ? true : false} }
+      }
+    })
+    const newPosts = await Promise.all(promises)
+
+    return newPosts
   }
 
   const submitPost = async (data) => {
@@ -93,8 +111,29 @@ export default function PostPage({user}) {
     }
   }
 
-  const followUser = async () => {
-    
+  const followUser = async (userId) => {
+    try{
+      if(!user)  throw new Error("no user logged in.")
+
+      const decodedToken = await currentDecodeUser()
+
+      const result = await getProfile(userId)
+      if(result && result.data && result.data.user) {
+        const followed = result.data.user.followers.find(follower => {
+          return follower === decodedToken.sub
+        })
+
+        if(followed) {
+          await deleteFollower(userId)
+        } else {
+          await addFollower(userId)
+        }
+
+        await getAPI()
+      }
+    } catch (error) {
+      setError(error)
+    }
   }
 
   return (
