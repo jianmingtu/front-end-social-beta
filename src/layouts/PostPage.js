@@ -12,16 +12,11 @@ export default function PostPage({user}) {
   const [error, setError] = useState("")
 
   useEffect(async () => {
-    getAPI()
+    await getAPI()
   }, [])
 
-  useEffect(async () => {
-    const newPosts = await updatePostLikes(posts)
-    setPosts(newPosts)    
-  }, [user])  
-
   const updatePostLikes = async (posts) => {
-    let newPosts = posts
+    let newPosts = []
 
     const decodedToken = await currentDecodeUser();  
     // if the current user is in the post's likes, set liked flag to be true
@@ -30,7 +25,7 @@ export default function PostPage({user}) {
       const liked = post.likeUserIds.find(likeUserId => {
         return decodedToken ? likeUserId === decodedToken.sub : false
       })
-      return { ...post,  liked: liked }
+      return { ...post, liked: liked ? true : false }
     })
 
     return newPosts

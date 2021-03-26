@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import OptionMenu from '../OptionMenu'
 import styles from './UserComment.module.css'
 import { getProfile } from '../../network/network'
+import { LocalDining } from '@material-ui/icons'
 
 export default function UserComment({comment, user, submitEditComment, deleteCommentButton, followUser}) {
   const [editing, setEditing] = useState(false)
@@ -37,6 +38,7 @@ export default function UserComment({comment, user, submitEditComment, deleteCom
         <img className={styles.avatar} src={avatar} />
         <div className={styles.commentBlock}>
           <span className={styles.commentUser}>
+            {console.log(comment)}
             <p>{comment.user.username}</p>
             {
               !!user ?
