@@ -27,7 +27,9 @@ export default function PostDetailPage({user}) {
 
   const getCommentAPI = async () => {
     const resultComments = await getComments({postId})
+    console.log(resultComments)
     const newComments = await updateCommentFollowers(resultComments)
+    console.log(newComments)
     setComment(newComments)
   }
 
@@ -55,11 +57,13 @@ export default function PostDetailPage({user}) {
     if(post) {
       //Check post detail and add to post
       const result = await getProfile(post.user.id)
-      if(result && result.data && result.data.user) {
+      if(result && result.data && result.data.user && result.data.user.followers) {
         const followed = result.data.user.followers.find(follower => {
           return follower === decodedToken.sub
         })
         newPost = { ...post, user: { ...post.user, avatar: result.data.user.avatar, followed: followed ? true : false} }
+      } else {
+        newPost = { ...post, user: { ...post.user, avatar: result.data.user.avatar, followed: false} }
       }
     }
 
@@ -71,11 +75,13 @@ export default function PostDetailPage({user}) {
 
     const promises = comments.map(async comment => {
       const result = await getProfile(comment.user.id)
-      if(result && result.data && result.data.user) {
+      if(result && result.data && result.data.user && result.data.user.followers) {
         const followed = result.data.user.followers.find(follower => {
           return follower === decodedToken.sub
         })
         return { ...comment, user: { ...comment.user, avatar: result.data.user.avatar, followed: followed ? true : false} }
+      } else {
+        return { ...comment, user: { ...comment.user, avatar: result.data.user.avatar, followed: false} }
       }
     })
     const newComments = await Promise.all(promises)
@@ -160,7 +166,7 @@ export default function PostDetailPage({user}) {
       const decodedToken = await currentDecodeUser()
 
       const result = await getProfile(userId)
-      if(result && result.data && result.data.user) {
+      if(result && result.data && result.data.user && result.data.user.followers) {
         const followed = result.data.user.followers.find(follower => {
           return follower === decodedToken.sub
         })
@@ -170,10 +176,12 @@ export default function PostDetailPage({user}) {
         } else {
           await addFollower(userId)
         }
-
-        await getPostAPI()
-        await getCommentAPI()
+      } else {
+        await addFollower(userId)
       }
+      
+      await getPostAPI()
+      await getCommentAPI()
     } catch (error) {
       setError(error)
     }

@@ -43,11 +43,18 @@ export default function PostPage({user}) {
 
     const promises = posts.map(async post => {
       const result = await getProfile(post.user.id)
-      if(result && result.data && result.data.user) {
+      if(result && result.data && result.data.user && result.data.user.followers) {
+        console.log(result.data.user)
         const followed = result.data.user.followers.find(follower => {
           return follower === decodedToken.sub
         })
         return { ...post, user: { ...post.user, avatar: result.data.user.avatar, followed: followed ? true : false} }
+      } else {
+        if(result && result.data && result.data.user && result.data.user.avatar) {
+          return { ...post, user: { ...post.user, avatar: result.data.user.avatar, followed: false} }
+        } else {
+          return { ...post, user: { ...post.user, avatar: null, followed: false} }
+        }
       }
     })
     const newPosts = await Promise.all(promises)
@@ -118,7 +125,7 @@ export default function PostPage({user}) {
       const decodedToken = await currentDecodeUser()
 
       const result = await getProfile(userId)
-      if(result && result.data && result.data.user) {
+      if(result && result.data && result.data.user && result.data.user.followers) {
         const followed = result.data.user.followers.find(follower => {
           return follower === decodedToken.sub
         })
@@ -128,9 +135,11 @@ export default function PostPage({user}) {
         } else {
           await addFollower(userId)
         }
-
-        await getAPI()
+      } else {
+        await addFollower(userId)
       }
+
+      await getAPI()
     } catch (error) {
       setError(error)
     }
@@ -140,19 +149,23 @@ export default function PostPage({user}) {
     <div className={styles.container}>
     <p>{error}</p>
       {!!user && <NewPostForm user={user} submitPost={submitPost} newPostError={newPostError} />}
+      {console.log(posts)}
       {
         (posts && posts.length > 0) ?
           posts.map(post => (
-            <Post 
-              key={post._id}
-              post={post}
-              user={user}
-              likePost={likePost}
-              followUser={followUser}
-              submitEdit={submitEdit}
-              deleteButton={deleteButton}
-              error = {error}
-            />
+            post ?
+              <Post 
+                key={post._id}
+                post={post}
+                user={user}
+                likePost={likePost}
+                followUser={followUser}
+                submitEdit={submitEdit}
+                deleteButton={deleteButton}
+                error = {error}
+              />
+            :
+              <p>Error getting post</p>
           ))
         :
           <p>No Post</p>

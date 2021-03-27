@@ -89,14 +89,17 @@ export default function PostDetail({post, comments, user, submitEdit, deleteButt
               {
                 (comments && comments.length > 0) ?
                   comments.map(comment => (
-                    <UserComment 
-                      key={comment._id}
-                      comment={comment}
-                      user={user}
-                      submitEditComment={submitEditComment}
-                      deleteCommentButton={deleteCommentButton}
-                      followUser={followUser}
-                    />
+                    comment ?
+                      <UserComment 
+                        key={comment._id}
+                        comment={comment}
+                        user={user}
+                        submitEditComment={submitEditComment}
+                        deleteCommentButton={deleteCommentButton}
+                        followUser={followUser}
+                      />
+                    :
+                      <p>Error getting comment</p>
                   )).reverse()
                 :
                   <p>No Comment</p>

@@ -166,7 +166,7 @@ export async function saveProfile({file, description}) {
   }
 }
 
-export async function addFollower({userId}) {
+export async function addFollower(userId) {
   try {
     const headers = await authHeader()
     await axios.post(`${BASE_API}/users/${userId}/followers`, { content: {} } , { headers })
@@ -175,7 +175,7 @@ export async function addFollower({userId}) {
   }
 }
 
-export async function deleteFollower({userId}) {
+export async function deleteFollower(userId) {
   try {
     const headers = await authHeader()
     await axios.delete(`${BASE_API}/users/${userId}/followers`, { headers })
