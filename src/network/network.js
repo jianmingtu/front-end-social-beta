@@ -16,9 +16,11 @@ async function authHeader() {
   }
 }
 
-export async function getPosts() {
+
+// /posts?search=jianmingtu
+export async function getPosts({search}) {
   try {
-    const result = await axios.get(`${BASE_API}/posts`)
+    const result = await axios.get(`${BASE_API}/posts${ search ? `?search=${search}` : '' }`)
     console.log(result)
     return result.data.posts
   } catch (error) {

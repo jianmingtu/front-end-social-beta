@@ -25,6 +25,10 @@ export default function HeaderNavigation({user, setUserFunc}) {
       user={user}
       toProfile={toProfile}
       signOut={onSignOut}
+      onSearch={({search}) => {
+        
+        history.push(`/posts/?search=${search}`)
+        }}
     />
   )
 }

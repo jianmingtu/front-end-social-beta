@@ -5,18 +5,26 @@ import NewPostForm from '../components/PostPage/NewPostForm'
 import { getPosts, createPost, updatePost, deletePost, addLike, deleteLike, getProfile, addFollower, deleteFollower } from '../network/network'
 import styles from './Layout.module.css'
 import { currentDecodeUser } from '../network/userAuth'
+import { useLocation } from "react-router-dom"
 
 export default function PostPage({user}) {
   const [posts, setPosts] = useState([])
   const [newPostError, setNewPostError] = useState("")
   const [error, setError] = useState("")
+    let location = useLocation()
 
   useEffect(async () => {
     await getAPI()
   }, [])
 
-  const getAPI = async () => {
-    const postsResult = await getPosts()
+  useEffect(() => {
+    let query = new URLSearchParams(location.search);
+    const search = query.get("search")
+    getAPI(search)
+  }, [location])
+
+  const getAPI = async (search = "") => {
+    const postsResult = await getPosts({search})
     const newLikePosts = await updatePostLikes(postsResult)
     const newPosts = await updateFollowers(newLikePosts)
     setPosts(newPosts)
