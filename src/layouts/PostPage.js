@@ -31,14 +31,18 @@ export default function PostPage({user}) {
   }
 
   const updatePostLikes = async (posts) => {
-    let newPosts = []
+    let newPosts = []    
 
-    const decodedToken = await currentDecodeUser();  
+    const decodedToken = await currentDecodeUser()
+    // no need to convert if no user signs in
+      if(!decodedToken) 
+        return posts      
+
     // if the current user is in the post's likes, set liked flag to be true
     newPosts = posts.map(post => {
       // if the current user voted Like on this post, the Like Icon shows in color and its value is set to be true
       const liked = post.likeUserIds.find(likeUserId => {
-        return decodedToken ? likeUserId === decodedToken.sub : false
+        return likeUserId === decodedToken.sub
       })
       return { ...post, liked: liked ? true : false }
     })
@@ -48,6 +52,10 @@ export default function PostPage({user}) {
 
   const updateFollowers = async (posts) => {
     const decodedToken = await currentDecodeUser()
+
+    // no need to convert if no user signs in
+      if(!decodedToken) 
+        return posts     
 
     const promises = posts.map(async post => {
       const result = await getProfile(post.user.id)
@@ -99,7 +107,8 @@ export default function PostPage({user}) {
 
   const likePost = async (postId) => {
     try {
-      if(!user)  throw new Error("no user logged in.")
+      if(!user)  
+      throw new Error("no user logged in.")
 
       // To avoid Await in a For-Loop, we choose promise all
       const promises = posts.map(post => {
@@ -128,9 +137,14 @@ export default function PostPage({user}) {
 
   const followUser = async (userId) => {
     try{
-      if(!user)  throw new Error("no user logged in.")
-
+      if(!user)  {
+        throw new Error("no user logged in.")
+      }
       const decodedToken = await currentDecodeUser()
+
+    // no need to convert if no user signs in
+      if(!decodedToken) 
+        throw new Error("no user logged in.")   
 
       const result = await getProfile(userId)
       if(result && result.data && result.data.user && result.data.user.followers) {
