@@ -6,22 +6,11 @@ import styles from './Post.module.css'
 import { IconButton, Typography } from '@material-ui/core'
 import ThumbUpAltRoundedIcon from '@material-ui/icons/ThumbUpAltRounded'
 import { PRIMARY_COLOR, BUTTON_COLOR }  from '../../constant'
-import { getProfile } from '../../network/network'
 
-export default function Post({post, user, likePost, submitEdit, deleteButton, error}) {
+export default function Post({post, user, likePost, followUser, submitEdit, deleteButton, error}) {
   const [editing, setEditing] = useState(false)
-  const [avatar, setAvatar] = useState("")
 
   const history = useHistory()
-
-  useEffect(async () => {
-    if(post) {
-      const result = await getProfile(post.user.id)
-      if(result && result.data && result.data.user) {
-        setAvatar(result.data.user.avatar)
-      }
-    }
-  }, [!post])
 
   const editButton = (e) => {
     setEditing(true)
@@ -45,7 +34,7 @@ export default function Post({post, user, likePost, submitEdit, deleteButton, er
     <div className={styles.postContainer} >
       <span className={styles.postUser}>
         <span className={styles.user}>
-          <img className={styles.avatar} src={avatar} />
+          <img className={styles.avatar} src={post.user.avatar} />
           <p>{post.user.username}</p>
         </span>
         {
@@ -53,7 +42,9 @@ export default function Post({post, user, likePost, submitEdit, deleteButton, er
             post.user.id == user.sub ?
               <OptionMenu editButton={editButton} deleteButton={deleteButton} thisId={post._id} />
             :
-              <button>Follow</button>
+              <button onClick={() => followUser(post.user.id)}>
+                {post.user.followed ? <>Unfollow</> : <>Follow</>}
+              </button>
           : null
         }
       </span>

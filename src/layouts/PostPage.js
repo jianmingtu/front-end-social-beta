@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import Post from '../components/PostPage/Post'
 import NewPostForm from '../components/PostPage/NewPostForm'
-import { getPosts, createPost, updatePost, deletePost, addLike, deleteLike } from '../network/network'
+import { getPosts, createPost, updatePost, deletePost, addLike, deleteLike, getProfile, addFollower, deleteFollower } from '../network/network'
 import styles from './Layout.module.css'
 import { currentDecodeUser } from '../network/userAuth'
 import { useLocation } from "react-router-dom"
@@ -13,20 +13,25 @@ export default function PostPage({user}) {
   const [error, setError] = useState("")
     let location = useLocation()
 
+  useEffect(async () => {
+    await getAPI()
+  }, [])
+
   useEffect(() => {
     let query = new URLSearchParams(location.search);
     const search = query.get("search")
     getAPI(search)
   }, [location])
 
-
-   useEffect(async () => {
-     const newPosts = await updatePostLikes(posts)
-     setPosts(newPosts)    
-   }, [user])  
+  const getAPI = async (search = "") => {
+    const postsResult = await getPosts({search})
+    const newLikePosts = await updatePostLikes(postsResult)
+    const newPosts = await updateFollowers(newLikePosts)
+    setPosts(newPosts)
+  }
 
   const updatePostLikes = async (posts) => {
-    let newPosts = posts
+    let newPosts = []
 
     const decodedToken = await currentDecodeUser();  
     // if the current user is in the post's likes, set liked flag to be true
@@ -35,16 +40,34 @@ export default function PostPage({user}) {
       const liked = post.likeUserIds.find(likeUserId => {
         return decodedToken ? likeUserId === decodedToken.sub : false
       })
-      return { ...post,  liked: liked ? true : false }
+      return { ...post, liked: liked ? true : false }
     })
 
     return newPosts
   } 
 
-  const getAPI = async ( search = "") => {
-    const posts = await getPosts({search})
-    const newPosts = await updatePostLikes(posts)
-    setPosts(newPosts)
+  const updateFollowers = async (posts) => {
+    const decodedToken = await currentDecodeUser()
+
+    const promises = posts.map(async post => {
+      const result = await getProfile(post.user.id)
+      if(result && result.data && result.data.user && result.data.user.followers) {
+        console.log(result.data.user)
+        const followed = result.data.user.followers.find(follower => {
+          return follower === decodedToken.sub
+        })
+        return { ...post, user: { ...post.user, avatar: result.data.user.avatar, followed: followed ? true : false} }
+      } else {
+        if(result && result.data && result.data.user && result.data.user.avatar) {
+          return { ...post, user: { ...post.user, avatar: result.data.user.avatar, followed: false} }
+        } else {
+          return { ...post, user: { ...post.user, avatar: null, followed: false} }
+        }
+      }
+    })
+    const newPosts = await Promise.all(promises)
+
+    return newPosts
   }
 
   const submitPost = async (data) => {
@@ -80,18 +103,18 @@ export default function PostPage({user}) {
 
       // To avoid Await in a For-Loop, we choose promise all
       const promises = posts.map(post => {
-          if( post._id === postId) {
-              if (post.liked) { 
-                  deleteLike({postId: postId})
-                return { ...post, totalLikes: post.totalLikes-1, liked: false }
-              } else {
-                  addLike({postId: postId})
-                return { ...post, totalLikes: post.totalLikes+1, liked: true }
-              }
+        if( post._id === postId) {
+          if (post.liked) { 
+            deleteLike({postId: postId})
+            return { ...post, totalLikes: post.totalLikes-1, liked: false }
+          } else {
+            addLike({postId: postId})
+            return { ...post, totalLikes: post.totalLikes+1, liked: true }
           }
-          else{
-            return post
-          }
+        }
+        else{
+          return post
+        }
       })
 
       const newPosts = await Promise.all(promises)
@@ -103,22 +126,54 @@ export default function PostPage({user}) {
     }
   }
 
+  const followUser = async (userId) => {
+    try{
+      if(!user)  throw new Error("no user logged in.")
+
+      const decodedToken = await currentDecodeUser()
+
+      const result = await getProfile(userId)
+      if(result && result.data && result.data.user && result.data.user.followers) {
+        const followed = result.data.user.followers.find(follower => {
+          return follower === decodedToken.sub
+        })
+
+        if(followed) {
+          await deleteFollower(userId)
+        } else {
+          await addFollower(userId)
+        }
+      } else {
+        await addFollower(userId)
+      }
+
+      await getAPI()
+    } catch (error) {
+      setError(error)
+    }
+  }
+
   return (
     <div className={styles.container}>
     <p>{error}</p>
       {!!user && <NewPostForm user={user} submitPost={submitPost} newPostError={newPostError} />}
+      {console.log(posts)}
       {
         (posts && posts.length > 0) ?
           posts.map(post => (
-            <Post 
-              key={post._id}
-              post={post}
-              user={user}
-              likePost={likePost}
-              submitEdit={submitEdit}
-              deleteButton={deleteButton}
-              error = {error}
-            />
+            post ?
+              <Post 
+                key={post._id}
+                post={post}
+                user={user}
+                likePost={likePost}
+                followUser={followUser}
+                submitEdit={submitEdit}
+                deleteButton={deleteButton}
+                error = {error}
+              />
+            :
+              <p>Error getting post</p>
           ))
         :
           <p>No Post</p>
