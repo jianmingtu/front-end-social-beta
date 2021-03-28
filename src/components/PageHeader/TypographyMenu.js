@@ -19,19 +19,19 @@ export default function TypographyMenu({toProfile, signOut}) {
   return (
     <Paper className={classes.root}>
       <MenuList>
-        <MenuItem>
+        <MenuItem onClick={toProfile}>
           <ListItemIcon>
             {settingIcon}				
           </ListItemIcon>
-          <Typography variant="inherit" noWrap onClick={toProfile}>
+          <Typography variant="inherit" noWrap>
             Profile
           </Typography>
         </MenuItem>
-        <MenuItem>
+        <MenuItem onClick={signOut}>
           <ListItemIcon>
             {signOutIcon}
           </ListItemIcon>
-          <Typography variant="inherit" noWrap onClick={signOut}>
+          <Typography variant="inherit" noWrap>
             Sign Out 
           </Typography>
         </MenuItem>
