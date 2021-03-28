@@ -34,3 +34,36 @@
   padding: 0.5rem;
   border-top: 1px solid #000000;
 }
+
+
+.svg_icons{
+  transform: scale(2.5);
+}
+
+.customFileInput::-webkit-file-upload-button {
+  visibility: hidden;
+}
+.customFileInput::before {
+  content: 'Select some files';
+  display: inline-block;
+  background: #18A0FB;
+  border: 1px solid #999;
+  border-radius: 3px;
+  padding: 5px 8px;
+  outline: none;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  cursor: pointer;
+  color: white;
+  font-weight: 700;
+  font-size: 10pt;
+  border-radius: 10px;
+}
+.customFileInput:hover::before {
+  border-color: black;
+}
+.customFileInput:active::before {
+  background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
+}
+
+

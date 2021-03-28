@@ -3,11 +3,26 @@ import { useHistory } from 'react-router-dom'
 
 import OptionMenu from '../OptionMenu'
 import styles from './Post.module.css'
-import { IconButton, Typography } from '@material-ui/core'
+import { Button, IconButton, Typography } from '@material-ui/core'
 import ThumbUpAltRoundedIcon from '@material-ui/icons/ThumbUpAltRounded'
 import { PRIMARY_COLOR, BUTTON_COLOR }  from '../../constant'
+import CommentIcon from '@material-ui/icons/Comment';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+
+  submitButton : {
+    borderRadius: 25,
+    backgroundColor: PRIMARY_COLOR,
+    padding: "2px 20px",
+    color: "white",
+    fontSize: "1rem"
+  }
+}));
 
 export default function Post({post, user, likePost, followUser, submitEdit, deleteButton, error}) {
+  const classes = useStyles();
+
   const [editing, setEditing] = useState(false)
 
   const history = useHistory()
@@ -42,9 +57,9 @@ export default function Post({post, user, likePost, followUser, submitEdit, dele
             post.user.id == user.sub ?
               <OptionMenu editButton={editButton} deleteButton={deleteButton} thisId={post._id} />
             :
-              <button onClick={() => followUser(post.user.id)}>
+              <Button size="medium" className={classes.submitButton} variant="contained" onClick={() => followUser(post.user.id)}>
                 {post.user.followed ? <>Unfollow</> : <>Follow</>}
-              </button>
+              </Button>
           : null
         }
       </span>
@@ -54,8 +69,8 @@ export default function Post({post, user, likePost, followUser, submitEdit, dele
             <form className={styles.inputForm} onSubmit={handleSubmitEdit}>
               <textarea className={styles.formText} name="content">{post.content}</textarea>
               <span className={styles.formButton}>
-                <button type="button" onClick={cancelEdit}>Cancel</button>
-                <button type="submit">Post</button>
+                <Button size="medium" className={classes.submitButton} variant="contained" type="button" onClick={cancelEdit}>Cancel</Button>
+                <Button size="medium" className={classes.submitButton} variant="contained"   type="submit">Post</Button>
               </span>
             </form>
           :
@@ -75,12 +90,15 @@ export default function Post({post, user, likePost, followUser, submitEdit, dele
           <IconButton fontSize="medium" onClick={() => likePost(post._id)} >
             {post.liked ? <ThumbUpAltRoundedIcon fontSize="medium" style={{ color: PRIMARY_COLOR }}  /> : <ThumbUpAltRoundedIcon fontSize="medium" style={{ color: BUTTON_COLOR }} /> }
           </IconButton>
-          <Typography variant="body2" color="textPrimary" component="p">
-            {post.totalLikes}</Typography>
+          <div>
+            <p>{post.totalLikes}</p></div>
         </span>
         <span className={styles.buttonCounter}>
-          <button onClick={toDetail} name={post._id}>Comment</button>
-          <p>{post.totalComments}</p>
+          <IconButton fontSize="medium" onClick={toDetail} name={post._id} >
+            <CommentIcon fontSize="medium" style={{ color: PRIMARY_COLOR }}  />
+          </IconButton>
+          <div>
+          <p>{post.totalComments}</p></div>
         </span>
       </span>
     </div>

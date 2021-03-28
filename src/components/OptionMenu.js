@@ -6,6 +6,9 @@ import MenuItem from '@material-ui/core/MenuItem'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import Fade from '@material-ui/core/Fade'
+import IconButton from '@material-ui/core/IconButton';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import { PRIMARY_COLOR, BUTTON_COLOR }  from '../constant'
 
 export default function OptionMenu({editButton, deleteButton, thisId}) {
   const [anchorEl, setAnchorEl] = React.useState(null)
@@ -21,9 +24,17 @@ export default function OptionMenu({editButton, deleteButton, thisId}) {
 
   return (
     <div>
-      <Button aria-controls="option-menu" aria-haspopup="true" onClick={handleClick}>
-        Options
-      </Button>
+
+      <IconButton
+        aria-label="more"
+        aria-controls="long-menu"
+        aria-haspopup="true"
+        onClick={handleClick}
+        fontSize="large"
+      >
+        <MoreVertIcon style={{ color: PRIMARY_COLOR }} />
+      </IconButton>
+
       <Menu
         id="option-menu"
         anchorEl={anchorEl}

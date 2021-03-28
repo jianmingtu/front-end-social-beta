@@ -4,11 +4,25 @@ import UserComment from './UserComment'
 import CommentForm from './CommentForm'
 import OptionMenu from '../OptionMenu'
 import styles from './PostDetail.module.css'
-import { IconButton, Typography } from '@material-ui/core'
+import { Button, IconButton, Typography } from '@material-ui/core'
 import ThumbUpAltRoundedIcon from '@material-ui/icons/ThumbUpAltRounded'
 import { PRIMARY_COLOR, BUTTON_COLOR }  from '../../constant'
+import { makeStyles } from '@material-ui/core/styles';
+import CommentIcon from '@material-ui/icons/Comment';
+
+const useStyles = makeStyles((theme) => ({
+
+  submitButton : {
+    borderRadius: 25,
+    backgroundColor: PRIMARY_COLOR,
+    padding: "2px 20px",
+    color: "white",
+    fontSize: "1rem"
+  }
+}));
 
 export default function PostDetail({post, comments, user, submitEdit, deleteButton, submitComment, submitEditComment, deleteCommentButton, likePost, followUser}) {
+     const classes = useStyles();
   const [editing, setEditing] = useState(false)
 
   const editButton = (e) => {
@@ -50,9 +64,9 @@ export default function PostDetail({post, comments, user, submitEdit, deleteButt
                     post.user.id == user.sub ?
                       <OptionMenu editButton={editButton} deleteButton={deleteButton} />
                     :
-                      <button onClick={() => followUser(post.user.id)}>
+                      <Button size="medium" className={classes.submitButton} variant="contained" onClick={() => followUser(post.user.id)}>
                         {post.user.followed ? <>Unfollow</> : <>Follow</>}
-                      </button>
+                      </Button>
                   : null
                 }
               </span>
@@ -62,8 +76,8 @@ export default function PostDetail({post, comments, user, submitEdit, deleteButt
                     <form className={styles.inputForm} onSubmit={handleSubmitEdit}>
                       <textarea className={styles.formText} name="content">{post.content}</textarea>
                       <span className={styles.formButton}>
-                        <button type="button" onClick={cancelEdit}>Cancel</button>
-                        <button type="submit">Post</button>
+                        <Button size="medium" className={classes.submitButton} variant="contained" type="button" onClick={cancelEdit}>Cancel</Button>
+                        <Button size="medium" className={classes.submitButton} variant="contained"   type="submit">Post</Button>                        
                       </span>
                     </form>
                   :
@@ -79,7 +93,10 @@ export default function PostDetail({post, comments, user, submitEdit, deleteButt
                     {post.totalLikes}</Typography>
                 </span>
                 <span className={styles.buttonCounter}>
-                  <button>Icon</button>
+
+                  <IconButton fontSize="medium"  >
+                    <CommentIcon fontSize="medium" style={{ color: PRIMARY_COLOR }}  />
+                  </IconButton>              
                   <p>{post.totalComments}</p>
                 </span>
               </span>
