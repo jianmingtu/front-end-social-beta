@@ -7,6 +7,7 @@ import { PRIMARY_COLOR }  from '../../constant'
 import { fade, makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import { AppBar, Avatar, Link, Toolbar, IconButton, Typography, InputBase, Badge, MenuItem, Button } from '@material-ui/core'
+import logo from './logo.png'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -84,7 +85,7 @@ const useStyles = makeStyles((theme) => ({
     loginButton : {
     borderRadius: 35,
     backgroundColor: PRIMARY_COLOR,
-    padding: "4px 20px",
+    padding: "2px 20px",
     color: "white",
     fontSize: "1.2rem"
   }
@@ -106,7 +107,7 @@ export default function PageHeader({user, toProfile, signOut, onSearch}) {
   return (
     <div className={styles.container}>
       <p className={styles.leftContainer}><button className={styles.logoButton} onClick={() => history.push("/")}>
-        <img src="./logo.png" alt="socialCafe"  width="200px"  height="30px"  />
+        <img src={logo} alt="socialCafe"  width="200px"  height="30px"  />
       </button>
 
 
