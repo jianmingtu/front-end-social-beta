@@ -43,13 +43,13 @@ export default function OptionMenu({editButton, deleteButton, thisId}) {
       >
         <Paper>
           <MenuList>
-            <MenuItem>
-              <Typography variant="inherit" noWrap onClick={editButton}>
+            <MenuItem onClick={editButton}>
+              <Typography variant="inherit" noWrap>
                 Edit
               </Typography>
             </MenuItem>
-            <MenuItem>
-              <Typography variant="inherit" noWrap onClick={deleteButton} name={thisId}>
+            <MenuItem onClick={deleteButton}>
+              <Typography variant="inherit" noWrap name={thisId}>
                 Delete
               </Typography>
             </MenuItem>

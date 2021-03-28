@@ -34,44 +34,64 @@ export default function PostDetailPage({user}) {
   }
 
   const updatePostLikes = async (post) => {
+  
+    // no need to convert if no user signs in
+    if(!post) 
+      return post   
+    
+    const decodedToken = await currentDecodeUser()
+    // no need to convert if no user signs in
+    if(!decodedToken) 
+      return post
+    
     let newPost = post
 
-    if(post) {
-      const decodedToken = await currentDecodeUser()
-      // if the current user is in the post's likes, set liked flag to be true
-      // if the current user voted Like on this post, the Like Icon shows in color and its value is set to be true
-      const liked = post.likeUserIds.find(likeUserId => {
-        return decodedToken ? likeUserId === decodedToken.sub : false
-      })
-      newPost = { ...post, liked: liked ? true : false }
-    }
+    // if the current user is in the post's likes, set liked flag to be true
+    // if the current user voted Like on this post, the Like Icon shows in color and its value is set to be true
+    const liked = post.likeUserIds.find(likeUserId => {
+      return likeUserId === decodedToken.sub
+    })
+    newPost = { ...post, liked: liked ? true : false }
 
     return newPost
   } 
 
   const updatePostFollowers = async (post) => {
-    let newPost = null
-
+    // no need to convert if no user signs in
+    if(!post) 
+      return post   
+    
     const decodedToken = await currentDecodeUser()
+    // no need to convert if no user signs in
+    if(!decodedToken) 
+      return post
+    
+    let newPost = post
 
-    if(post) {
-      //Check post detail and add to post
-      const result = await getProfile(post.user.id)
-      if(result && result.data && result.data.user && result.data.user.followers) {
-        const followed = result.data.user.followers.find(follower => {
-          return follower === decodedToken.sub
-        })
-        newPost = { ...post, user: { ...post.user, avatar: result.data.user.avatar, followed: followed ? true : false} }
-      } else {
-        newPost = { ...post, user: { ...post.user, avatar: result.data.user.avatar, followed: false} }
-      }
+    //Check post detail and add to post
+    const result = await getProfile(post.user.id)
+    if(result && result.data && result.data.user && result.data.user.followers) {
+      const followed = result.data.user.followers.find(follower => {
+        return follower === decodedToken.sub
+      })
+      newPost = { ...post, user: { ...post.user, avatar: result.data.user.avatar, followed: followed ? true : false} }
+    } else {
+      newPost = { ...post, user: { ...post.user, avatar: result.data.user.avatar, followed: false} }
     }
 
     return newPost
   } 
 
   const updateCommentFollowers = async (comments) => {
+    // no need to convert if no user signs in
+    if(!comments) 
+      return comments   
+    
     const decodedToken = await currentDecodeUser()
+    // no need to convert if no user signs in
+    if(!decodedToken) 
+      return comments
+    
 
     const promises = comments.map(async comment => {
       const result = await getProfile(comment.user.id)
@@ -140,7 +160,9 @@ export default function PostDetailPage({user}) {
 
   const likePost = async (postId) => {
     try {
-      if(!user)  throw new Error("no user logged in.")
+      if(!user)  {
+        throw new Error("no user logged in.")
+      }
 
       let newPost = null 
       if (post.liked) {
@@ -161,9 +183,16 @@ export default function PostDetailPage({user}) {
   
   const followUser = async (userId) => {
     try{
-      if(!user)  throw new Error("no user logged in.")
+      if(!user)  {
+        throw new Error("no user logged in.")
+      }
 
-      const decodedToken = await currentDecodeUser()
+      const decodedToken = await currentDecodeUser()  
+          
+    // no need to convert if no user signs in
+      if(!decodedToken)  {
+        throw new Error("no user logged in.")
+      }   
 
       const result = await getProfile(userId)
       if(result && result.data && result.data.user && result.data.user.followers) {

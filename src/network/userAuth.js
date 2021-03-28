@@ -110,7 +110,7 @@ export function currentDecodeUser() {
     return (jwtDecode(JwtToken)) 
   }).catch( e => {
     console.log(e)
-    return ""
+    return null
   });
 }
 
