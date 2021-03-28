@@ -14,8 +14,12 @@ export default function PostDetailPage({user}) {
   const history = useHistory()
 
   useEffect(async () => {
-    await getPostAPI()
-    await getCommentAPI()
+    try {
+      await getPostAPI()
+      await getCommentAPI() 
+    } catch (error) {
+      setError(error)
+    }
   }, []) 
 
   const getPostAPI = async () => {
