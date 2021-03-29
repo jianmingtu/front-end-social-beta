@@ -5,6 +5,7 @@ import styles from './UserComment.module.css'
 import { PRIMARY_COLOR }  from '../../constant'
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, IconButton } from '@material-ui/core'
+import {formatDate} from '../../ultilities/common'
 
 const useStyles = makeStyles((theme) => ({
 
@@ -42,7 +43,7 @@ export default function UserComment({comment, user, submitEditComment, deleteCom
         <div className={styles.commentBlock}>
           <span className={styles.commentUser}>
             {console.log(comment)}
-            <p>{comment.user.username}</p>
+            <p>{comment.user.username}  {formatDate(comment.timestamp)}</p>
             {
               !!user ?
                 comment.user.id == user.sub ?

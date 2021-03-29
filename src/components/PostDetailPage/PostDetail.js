@@ -9,6 +9,7 @@ import ThumbUpAltRoundedIcon from '@material-ui/icons/ThumbUpAltRounded'
 import { PRIMARY_COLOR, BUTTON_COLOR }  from '../../constant'
 import { makeStyles } from '@material-ui/core/styles';
 import CommentIcon from '@material-ui/icons/Comment';
+import {formatDate} from '../../ultilities/common'
 
 const useStyles = makeStyles((theme) => ({
 
@@ -20,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "1rem"
   }
 }));
+
 
 export default function PostDetail({post, comments, user, submitEdit, deleteButton, submitComment, submitEditComment, deleteCommentButton, likePost, followUser}) {
      const classes = useStyles();
@@ -57,7 +59,7 @@ export default function PostDetail({post, comments, user, submitEdit, deleteButt
               <span className={styles.postUser}>
                 <span className={styles.user}>
                   <img className={styles.avatar} src={post.user.avatar} />
-                  <p>{post.user.username}</p>
+                  <p>{post.user.username}  {formatDate(post.timestamp)}</p>
                 </span>
                 {
                   !!user ?
